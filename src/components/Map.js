@@ -246,7 +246,7 @@ const Map = ({ location }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onBlur={() => updateQueryString(center.lat, center.lng, zoom, drawnShapes, searchQuery)}
-          style={{ width: '380px', marginBottom: '', padding: '5px' }}
+          style={{ width: '380px', marginBottom: '', padding: '5px', color:'#222' }}
         />
       </div>
       <div className="virtualtour" ref={mapRef} style={{ width: '100%', height: 'calc(100vh - 150px)', position: 'relative', zIndex: '0' }}></div>
