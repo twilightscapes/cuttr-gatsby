@@ -1,22 +1,22 @@
 {
   "meta": {
-    "iconimage": "/assets/Cuttr.svg",
+    "iconimage": "/assets/Cuttr-logo-wht.svg",
     "companyname": "Cuttr",
     "siteUrl": "https://cuttr.app",
     "twitterUsername": "toddlambert",
-    "titleDefault": "Cuttr - Lawn Sharing",  
+    "titleDefault": "Cuttr",  
     "postcount": 9,
     "homecount": 3,
     "titleTemplate": "%s",
-    "title": "Lawn Sharing made simple - cut your grass from space",
-    "image": "/assets/pawprints.svg",
-    "description": "Lawn Sharing made simple - cut your grass from space",
+    "title": "Cuttr Is Coming",
+    "image": "",
+    "description": "",
     "icon512": "/assets/cuttr-icon.png",
     "defaultCollection": "",
     "showCollectionTitles": false,
     "navOptions": {
       "showNav": true,
-      "showNav2": true,
+      "showNav2": false,
       "showFooterMenu": false
     },
     "featureOptions": {

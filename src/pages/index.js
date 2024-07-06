@@ -1,58 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import Seo from '../components/seo';
-import Layout from '../components/siteLayout';
-import Map from '../components/Map';
+import React from "react";
+import Seo from "../components/seo";
+import Layout from "../components/siteLayout";
 import { Helmet } from 'react-helmet';
-import { useLocation } from '@reach/router'; // Import useLocation hook
+import { Link } from "gatsby"
+import { RiArrowLeftSLine, RiCheckboxCircleLine } from "react-icons/ri"
 
-const IndexPage = () => {
-  const location = useLocation(); // Use useLocation hook to get location
-  const [mapData, setMapData] = useState(null);
 
-  const handleMapUpdate = (data) => {
-    setMapData(data);
-  };
+const Thanks = () => {
+      return (
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    formData.append('mapData', JSON.stringify(mapData));
-    fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      method: 'POST',
-      body: formData,
-    }).then((response) => {
-      if (response.ok) {
-        alert('Successfully registered!');
-      } else {
-        alert('Registration failed.');
-      }
-    });
-  };
-
-  return (
-    <Layout>
-      <Helmet>
-        <body id="body" className="homepage install noscroll" style={{ overflow: 'hidden' }} />
+ <Layout className="thanks-page">
+  <Helmet>
+        <body id="body" className="homepage install" style={{ overflow: 'hidden' }} />
       </Helmet>
-      <Seo title="Map Registration" />
-      <section className="outer section">
-        <div className="container" style={{ padding: '0', minHeight: '100vh' }}>
-          <Map location={location} onMapUpdate={handleMapUpdate} />
-          <form onSubmit={handleFormSubmit} style={{ height: '30px', padding: '4px 10px' }}>
-            <label>
-              Name:
-              <input type="text" name="name" required />
-            </label>
-            <label>
-              Email:
-              <input type="email" name="email" required />
-            </label>
-            <button type="submit">Register</button>
-          </form>
-        </div>
-      </section>
+ <Seo title={`Thanks!`} />
+
+<section className="outer section " >
+      <div className="container" style={{padding: '30px 0', minHeight:'100dvh'}}>
+        
+      {/* <div className="mobile"><GoBack /></div> */}
+
+
+    
+
+<div style={{width:'90%', height:'100px', margin:'0 auto', textAlign:'center',}}>
+
+
+
+
+{/* <RiCheckboxCircleLine className="" 
+        style={{
+          fontSize: "150px",
+      //     color: "var(--primary-color)",
+          margin:'0 auto',
+          textAlign:'center'
+        }}
+      /> */}
+      <h1 className="" style={{fontSize:'50px',}}>Coming Soon!</h1>
+      {/* <div className="spacer33"></div>  */}
+      {/* <Link to="/" className="button">
+        <RiArrowLeftSLine className="icon -left" />
+        Back to Homepage
+      </Link> */}
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+   
+
+
+    </section>
+    
+    
     </Layout>
   );
 };
 
-export default IndexPage;
+export default Thanks;

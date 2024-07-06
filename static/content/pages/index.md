@@ -54,9 +54,9 @@ pagePW: ""
 skillsTitle: ""
 svgImage: /assets/transparent.png
 template: index-page
-title: Lawn Sharing made simple - cut your grass from space
+title: Cuttr Is Coming
 postLimit: "4"
-description: Lawn Sharing made simple - cut your grass from space
+description: Cuttr Is Coming
 svgzindex: x
 coverletter:
   coverText: About Me
@@ -90,6 +90,6 @@ externalLink: https://cuttr.app
 
 <p>We make your life easier, your yard cleaner, and your dog happy!</p> -->
 
-<p>Lawn Sharing made simple - cut your grass from space</p>
+<!-- <p>Lawn Sharing made simple - cut your grass from space</p> -->
 
 
