@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Boundary Selector</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">
+    <style>
+        #map {
+            height: 100vh;
+            z-index: 1;
+        }
+        #area {
+            position: absolute;
+            top: 60px;
+            right: 15px;
+            background: white;
+            padding: 5px;
+            z-index:1 ;
+            border:1px solid red;
+            max-width: 240px;
+        }
+        #search {
+            position: absolute;
+            top: 20px;
+            right: 15px;
+            background: white;
+            padding: 5px;
+            z-index:1 ;
+            border:1px solid red;
+            max-width: 240px;
+        }
+        .logo {
+            position: absolute;
+            top: 0;
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            place-content: center;
+            border: 0px solid red;
+            margin: 0 auto;
+        }
+        .logo img {
+            max-width: 20vw;
+            opacity: .4;
+            position: absolute;
+            bottom: 20px;
+            right: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="map"></div>
+    <div id="area">Yard Size: 0 sq ft</div>
+    <div id="search">
+        <input type="text" id="addressInput" placeholder="Enter an address">
+        <button onclick="geocodeAddress()">Search</button>
+    </div>
+    <div class="logo"><img src="https://dogpoopers.com/assets/dogpooper-logo-text.svg" /></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+    <script>
+        // Function to update the query string in the URL
+        function updateQueryString() {
+            var bounds = drawnItems.toGeoJSON();
+            var encodedBounds = encodeURIComponent(JSON.stringify(bounds));
+            var center = map.getCenter();
+            var zoomLevel = map.getZoom();
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + 
+                         '?bounds=' + encodedBounds + '&zoom=' + zoomLevel +
+                         '&lat=' + center.lat.toFixed(5) + '&lng=' + center.lng.toFixed(5) +
+                         '&address=' + encodeURIComponent(document.getElementById('addressInput').value);
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+        }
+
+        // Function to calculate the total area of drawn shapes
+        function calculateArea() {
+            var totalArea = 0;
+            drawnItems.eachLayer(function(layer) {
+                var geojson = layer.toGeoJSON();
+                var area = 0;
+                if (geojson.geometry.type === 'Polygon') {
+                    area = turf.area(geojson);
+                } else if (geojson.geometry.type === 'LineString') {
+                    // Convert LineString to Polygon for area calculation
+                    var polygon = turf.lineToPolygon(geojson);
+                    area = turf.area(polygon);
+                }
+                totalArea += area;
+            });
+            // Convert square meters to square feet
+            var totalAreaSqFt = totalArea * 10.7639;
+            document.getElementById('area').innerText = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft';
+        }
+
+        // Function to load boundaries and zoom level from the query string
+        function loadFromQueryString() {
+            var params = new URLSearchParams(window.location.search);
+            var boundsParam = params.get('bounds');
+            var zoomParam = params.get('zoom');
+            var latParam = params.get('lat');
+            var lngParam = params.get('lng');
+            var addressParam = params.get('address');
+            
+            if (boundsParam) {
+                var bounds = JSON.parse(decodeURIComponent(boundsParam));
+                L.geoJSON(bounds).eachLayer(function (layer) {
+                    drawnItems.addLayer(layer);
+                });
+                calculateArea();
+            }
+            if (zoomParam && latParam && lngParam) {
+                var latlng = L.latLng(parseFloat(latParam), parseFloat(lngParam));
+                map.setView(latlng, parseInt(zoomParam));
+            }
+            if (addressParam) {
+                document.getElementById('addressInput').value = decodeURIComponent(addressParam);
+            }
+        }
+
+        // Initialize the map with the specified starting point and max zoom level
+        var map = L.map('map').setView([30.38, -89.03], 10);
+
+        // Add Mapbox satellite tiles
+        L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
+            maxZoom: 22,
+            tileSize: 512,
+            zoomOffset: -1,
+        }).addTo(map);
+
+        // Initialize the FeatureGroup to store editable layers
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        // Customize the draw control toolbar
+        var drawControl = new L.Control.Draw({
+            draw: {
+                polyline: true,
+                polygon: false, // Hide polygon tool
+                rectangle: false, // Hide rectangle tool
+                circle: false,
+                marker: false,
+                circlemarker: false
+            },
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+        map.addControl(drawControl);
+
+        // Event listener for when a new shape is created
+        map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+
+            // Handle touch events to finish drawing
+            layer.on('touchstart', function(event) {
+                // Trigger finish action when touch starts
+                drawnItems.addLayer(layer);
+                updateQueryString();
+                calculateArea();
+            });
+
+            drawnItems.addLayer(layer);
+            updateQueryString();
+            calculateArea();
+        });
+
+        // Event listener for when shapes are edited
+        map.on(L.Draw.Event.EDITED, function (event) {
+            updateQueryString();
+            calculateArea();
+        });
+
+        // Event listener for when shapes are deleted
+        map.on(L.Draw.Event.DELETED, function (event) {
+            updateQueryString();
+            calculateArea();
+        });
+
+        // Event listener for map moveend to update query string
+        map.on('moveend', function(event) {
+            updateQueryString();
+        });
+
+        // Load boundaries, center, and zoom level from the query string on page load
+        loadFromQueryString();
+
+        // Function to geocode address from input
+        function geocodeAddress() {
+            var address = document.getElementById('addressInput').value;
+            if (address.trim() !== '') {
+                var geocoder = L.Control.Geocoder.nominatim();
+                geocoder.geocode(address, function(results) {
+                    if (results.length > 0) {
+                        var latlng = results[0].center;
+                        map.setView(latlng, 15); // Set a default zoom level here if desired
+                        updateQueryString();
+                    } else {
+                        alert('Address not found');
+                    }
+                });
+            } else {
+                alert('Please enter an address');
+            }
+        }
+    </script>
+</body>
+</html>

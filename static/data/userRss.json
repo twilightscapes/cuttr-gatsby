@@ -1,0 +1,9 @@
+{
+  "rssFeeds": [
+    {
+      "name": "Pirate Social",
+      "rssFeedUrl": "https://piratesocial.org/rss.xml"
+    }
+  ],
+  "favorites": []
+}

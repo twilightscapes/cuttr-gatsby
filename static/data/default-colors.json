@@ -1,0 +1,12 @@
+{
+  "siteColor": "hsl(133, 47%, 54%)",
+  "siteColorText": "#fff",
+  "headerColor": "hsl(147, 61%, 26%)",
+  "headerColorText": "#eee",
+  "siteBackground": "hsl(146, 23%, 82%)",
+  "text": "hsl(133, 39%, 34%)",
+  "textShadow": "rgba(0, 0, 0, .3)",
+  "borderColor": "#888",
+  "borderRadius": "6px",
+  "siteFont": "Bowlby One"
+}

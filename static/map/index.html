@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #controls {
+      position: absolute;
+      top: 60px;
+      right: 5px;
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+    .button {
+      align-items: center;
+      align-self: center;
+      border: 1px solid;
+      border-color: #999;
+      border-radius: 3px;
+      color: #333 !important;
+      display: inline-flex;
+      height: auto;
+      justify-content: center;
+      margin: 1vh 0;
+      padding: 5px clamp(.5rem, 1vw, 1rem);
+      min-width: 140px;
+      font-size: clamp(.7rem, 1.5vw, 2rem);
+    }
+    .actionJackson {
+      background: #000;
+      color:#fff !important;
+    }
+    .logo {
+      position: absolute;
+      top: 0;
+      display: flex;
+      width: 100%;
+      height: 100vh;
+      place-content: center;
+      border: 0px solid red;
+      margin: 0 auto;
+    }
+    .logo img {
+      max-width: 20vw;
+      opacity: .4;
+      position: absolute;
+      bottom: 20px;
+      right: 45px;
+      z-index: 9999;
+    }
+    #controls input::placeholder {
+      color: #000;
+    }
+    #search {
+      
+
+  
+
+            z-index:1 ;
+
+            max-width: 200px;
+        }
+  </style>
+</head>
+<body>
+  <div class="logo"><img src="dogpooper-logo-text.svg" /></div>
+  
+  <div id="map"></div>
+  <div id="controls">
+    <div id="search" style="display:flex; margin-right:20px;">
+      <input type="text" id="address" placeholder="Street and City" style="padding:4px;margin:3px 0;" />
+    <button id="load-address" style="padding:4px;margin:3px 0;">Load Address</button>
+  </div>
+    
+    <button id="start-with-points" style="display: none;">Start With Initial Points</button>
+    <button id="start" class="button actionJackson">Size My Yard</button>
+    <button id="invert" class="button">Invert Colors</button>
+    <button id="end" class="button">Clear Points</button>
+  </div>
+
+  <script src="../dist/gmaps-measuretool.umd.js"></script>
+  <script>
+    const center = {lat: 30.38, lng: -89.03};
+    const segments = [
+      {"lat": 41.69547509615208, "lng": -71.36993408203125},
+      {"lat": 41.434490308949215, "lng": -71.3671875},
+      {"lat": 41.50857729743936, "lng": -71.20513916015625},
+      {"lat": 41.66923209813446, "lng": -71.18435546874998},
+      {"lat": 41.80245339578072, "lng": -71.34365722656248},
+      {"lat": 41.910875425626266, "lng": -71.39034912109373},
+      {"lat": 42.01299182987659, "lng": -71.38760253906248},
+      {"lat": 42.01299182987659, "lng": -71.80508300781248},
+      {"lat": 41.69957665997156, "lng": -71.795654296875},
+      {"lat": 41.3566211272796, "lng": -71.82156249999998},
+      {"lat": 41.37723402378496, "lng": -71.49471923828123},
+      {"lat": 41.6154423246811, "lng": -71.48529052734375},
+      {"lat": 41.69547509615208, "lng": -71.36993408203125}
+    ];
+
+    var map, measureTool, geocoder;
+
+    // Define a style to hide points of interest and other features.
+    const mapStyle = [
+      {
+        "featureType": "poi",
+        "stylers": [{ "visibility": "off" }]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [{ "visibility": "off" }]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "labels",
+        "stylers": [{ "visibility": "off" }]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels",
+        "stylers": [{ "visibility": "on" }]
+      }
+    ];
+
+    function initMap() {
+      // Default values if query parameters are not provided
+      let defaultParams = {
+        lat: center.lat,
+        lng: center.lng,
+        zoom: 12,
+        address: ""
+      };
+
+      // Parse query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('lat') && urlParams.has('lng') && urlParams.has('zoom')) {
+        defaultParams.lat = parseFloat(urlParams.get('lat'));
+        defaultParams.lng = parseFloat(urlParams.get('lng'));
+        defaultParams.zoom = parseInt(urlParams.get('zoom'));
+      }
+      if (urlParams.has('address')) {
+        defaultParams.address = urlParams.get('address');
+      }
+
+      // Create map with default parameters
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: defaultParams.lat, lng: defaultParams.lng },
+        zoom: defaultParams.zoom,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        styles: mapStyle,
+        fullscreenControl: false, // Disable full-screen control
+        mapTypeControl: false, // Disable map/satellite toggle button
+        streetViewControl: false, // Disable street view control
+        scaleControl: false, // Disable scale control
+        zoomControl: false, // Disable zoom control
+        tilt: 0
+      });
+
+      measureTool = new MeasureTool(map, {
+        contextMenu: false,
+        unit: MeasureTool.UnitTypeId.IMPERIAL // metric, imperial, or nautical
+      });
+
+      geocoder = new google.maps.Geocoder();
+
+      // Load address from query parameter
+      if (defaultParams.address) {
+        document.getElementById('address').value = defaultParams.address;
+        geocodeAddress(defaultParams.address);
+      }
+
+      // Update query string on map move
+      map.addListener('idle', () => {
+        updateQueryString();
+      });
+
+      // Update query string on zoom change
+      map.addListener('zoom_changed', () => {
+        updateQueryString();
+      });
+
+      measureTool.addListener('measure_start', () => {
+        console.log('started');
+      });
+
+      measureTool.addListener('measure_end', (e) => {
+        console.log('ended', e.result);
+      });
+
+      measureTool.addListener('measure_change', (e) => {
+        console.log('changed', e.result);
+      });
+    }
+
+    document.querySelector('#load-address').addEventListener('click', () => {
+      const address = document.getElementById('address').value;
+      geocodeAddress(address);
+    });
+
+    function geocodeAddress(address) {
+      geocoder.geocode({'address': address}, (results, status) => {
+        if (status === 'OK') {
+          if (results[0].geometry.viewport) {
+            map.fitBounds(results[0].geometry.viewport);
+          } else {
+            map.setCenter(results[0].geometry.location);
+            map.setZoom(20);  // Adjust the zoom level as needed
+          }
+          updateQueryString();
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+
+    // Function to update query string with current map state
+    function updateQueryString() {
+      const center = map.getCenter();
+      const zoom = map.getZoom();
+      const address = document.getElementById('address').value;
+
+      const queryParams = new URLSearchParams();
+      queryParams.set('lat', center.lat());
+      queryParams.set('lng', center.lng());
+      queryParams.set('zoom', zoom);
+      queryParams.set('address', address);
+
+      // Replace current URL with updated query string
+      history.replaceState(null, null, '?' + queryParams.toString());
+    }
+
+    let inverted = false;
+    document.querySelector('#start-with-points')
+        .addEventListener('click', () => measureTool.start(segments));
+
+    document.querySelector('#start')
+        .addEventListener('click', () => measureTool.start());
+
+    document.querySelector('#end')
+        .addEventListener('click', () => measureTool.end());
+
+    document.querySelector('#invert')
+        .addEventListener('click', () => {
+          inverted = !inverted;
+          measureTool.setOption('invertColor', inverted);
+        });
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-iKnH_TwzkJytZvQiFNxdp_WQMlsJ4VQ&libraries=geometry&callback=initMap&loading=async"
+          async defer></script>
+</body>
+</html>

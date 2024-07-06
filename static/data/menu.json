@@ -1,0 +1,16 @@
+{
+  "menuItems": [
+    {
+      "menutitle": "Contact Us",
+      "url": "/contact"
+    },
+    {
+      "menutitle": "Blog",
+      "url": "/search"
+    },
+    {
+      "menutitle": "Customer Portal",
+      "url": "/portal"
+    }
+  ]
+}
