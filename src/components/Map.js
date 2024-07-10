@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby-plugin-modal-routing-4'
+import { TfiTarget } from "react-icons/tfi";
 const Map = ({ location }) => {
   const mapRef = useRef(null);
   const searchRef = useRef(null);
@@ -217,7 +218,8 @@ const Map = ({ location }) => {
           onChange={handleSearchChange}
         />
 
-        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>Target Yard</button>
+        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>
+        <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Target Yard</button>
 
         <button className="button" style={{ padding: '.3vh 5px', fontSize: 'clamp(.7rem,1.2vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
 
@@ -249,13 +251,13 @@ const Map = ({ location }) => {
       
       <div style={{ position: 'absolute', top: '13vh', left: '55px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
         <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
-        <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert Text</label>
+        <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert</label>
       </div>
 
 
       <Link to='/contact' state={{modal: true}} className="print hover" style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center'}}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '0', left:'', right: '', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900', width:'' }}>
-    Cut My Grass From Space
+      <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 1vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900', width:'' }}>
+      <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Cut Grass From Space
       </div>
       </Link>
     
