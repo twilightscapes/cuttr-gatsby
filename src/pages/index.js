@@ -16,7 +16,7 @@ const IndexPage = () => {
 
 
   return (
-    <>
+    <Layout>
       <Helmet>
         <body id="body" className="homepage1 install noscroll" style={{ overflow: 'hidden', paddingTop:'' }} />
   
@@ -27,7 +27,7 @@ const IndexPage = () => {
           <Map location={location} onMapUpdate={handleMapUpdate} />
         </div>
       </section>
-    </>
+    </Layout>
   );
 };
 

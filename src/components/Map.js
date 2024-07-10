@@ -219,7 +219,7 @@ const Map = ({ location }) => {
 
       </div>
       
-      <div style={{ position: 'absolute', bottom: '0', left: '1vw', background: '#fff', padding: '4px 10px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '10', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
+      <div style={{ position: 'absolute', bottom: '14vh', left: '1vw', background: '#fff', padding: '4px 10px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '10', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
         <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
         <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert Text</label>
       </div>
