@@ -249,7 +249,7 @@ const Map = ({ location }) => {
       
 
       
-      <div style={{ position: 'absolute', top: '13vh', left: '55px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
+      <div style={{ position: 'absolute', top: '15vh', left: '55px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
         <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
         <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert</label>
       </div>
@@ -257,7 +257,7 @@ const Map = ({ location }) => {
 
       <Link to='/contact' state={{modal: true}} className="print hover" style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center'}}>
       <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 1vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900', width:'' }}>
-      <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Cut Grass From Space
+      <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Cut My Grass From Space
       </div>
       </Link>
     
