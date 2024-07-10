@@ -91,8 +91,8 @@ const Layout = ({ children }) => {
   const { iconimage } = useSiteMetadata()
   const { image } = useSiteMetadata()
 
-  const fontUrl = `https://fonts.googleapis.com/css?family=${defaultColors?.siteFont}&display=swap`;
-
+  // const fontUrl = `https://fonts.googleapis.com/css?family=${defaultColors?.siteFont}&display=swap`;
+  const fontUrl = `https://fonts.googleapis.com/css2?family=Geologica:wght@900&display=swap`;
 
 
   // Determine the current page location
@@ -112,6 +112,8 @@ const Layout = ({ children }) => {
         <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link id="yyy" rel="stylesheet" href={fontUrl} crossOrigin="anonymous" referrerPolicy="no-referrer-when-downgrade" />
+
+        
         <style>{`
           ${userStyles.userStyles}
         `}</style>
@@ -252,14 +254,14 @@ const Layout = ({ children }) => {
   ""
 )}
 
-{!showNav2 ? (
+{/* {showNav2 ? (
 <label id="menuicon" htmlFor="openSidebarMenu" className="sidebarIconToggle1  " style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex:'10000', marginTop: '5px', textAlign: 'center', color:'#fff', height:'', cursor:'pointer' }}>
           <BsLayoutSidebarInsetReverse style={{ height: '28px', width:'28px', color:'#ddd', filter:'drop-shadow(0px 1px 0px var(--theme-ui-colors-textShadow))' }} />
           <span className="themetext">Menu</span>
           </label>
 ) : (
 ""
-)}
+)} */}
 
 </div>
 
