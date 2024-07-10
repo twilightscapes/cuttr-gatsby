@@ -74,7 +74,7 @@ const Contact = ({ data }) => {
 
 
 
-<StaticImage src="../../static/assets/dogpoopers-contact-header.webp" alt="Default Image" style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', zIndex:'1', top:'0', left:'0', right:'0', border:'0px solid #888 !important', objectFit:'contain', margin:'0'}} />
+{/* <StaticImage src="../../static/assets/dogpoopers-contact-header.webp" alt="Default Image" style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', zIndex:'1', top:'0', left:'0', right:'0', border:'0px solid #888 !important', objectFit:'contain', margin:'0'}} /> */}
 
       <div className="container panel" style={{ maxWidth: "1024px", margin: "0 auto", paddingTop: "0", background: '' }}>
 
@@ -85,9 +85,9 @@ const Contact = ({ data }) => {
 
 <div className="flexcheek" style={{padding:'5vh 0', width:'100%', order:'2'}}>
 <div style={{ padding: "3vh 0 0 0", textAlign:'center', color:'' }} dangerouslySetInnerHTML={{ __html: html }} />
+{/* <br />
 <br />
-<br />
-<div style={{textAlign:'center',}}>Please feel free to contact us<br /><br /><br />Customer Service #</div>
+<div style={{textAlign:'center',}}>Please feel free to contact us<br /><br /><br />Customer Service #</div> */}
 <h3 style={{textAlign:'center', fontSize: 'clamp(1.3rem, 2vw, 3rem)'}}><a href="tel:6013851781">(601) 385-1781</a></h3>
 </div>
 

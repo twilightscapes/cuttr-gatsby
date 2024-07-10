@@ -12,4 +12,8 @@ uploadtext: ""
 excludeFromRSS: true
 ---
 
-<h2>Thank you for your interest in Dog Poopers</h2>
+<h2>Thank you for your interest.</h2>
+
+We are still in beta testing and will be live soon. 
+
+If you are interested in Beta Testing, please contact us.
