@@ -217,7 +217,7 @@ const Map = ({ location }) => {
           onChange={handleSearchChange}
         />
 
-        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>Size Yard</button>
+        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>Target Yard</button>
 
         <button className="button" style={{ padding: '.3vh 5px', fontSize: 'clamp(.7rem,1.2vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
 
