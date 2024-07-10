@@ -2279,4 +2279,6 @@ body:has(.ReactModal__Content) .upbar{ transform:translateY(0);}
       
       .glow { color: #fff; font-weight: 700; font-style: italic; border-radius:0.675em; text-align: center;  transition: all 0.2s ease-in-out; text-shadow: .3vw .2vh .2vw #444, 0 3px .3vw rgb(8, 202, 44),0px 2px .3vw rgb(240, 240, 240),0 2px rgb(39, 227, 102, .4),0 2px .3vw rgb(39, 227, 99),0 0 .3vw rgb(39, 227, 80),0 0 .2vw rgb(39, 227, 86),0 0 .3vw rgb(39, 227, 77);
       } 
+
       
+      .help{top:8vh !important;}

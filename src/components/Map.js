@@ -192,16 +192,21 @@ const Map = ({ location }) => {
     <>
       <div className="virtualtour" ref={mapRef} style={{ width: '100%', height: '100dvh', position: 'relative' }}></div>
 
+
       <div style={{ position: 'absolute', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', margin:'0 auto', padding:'0 0 4px 0' }}>
 
-      <Link to="/" aria-label="Link to Top" title="Back to Top" style={{textDecoration:'none', borderBottom:'0'}}>
+
+
+
+
+      {/* <Link to="/" aria-label="Link to Top" title="Back to Top" style={{textDecoration:'none', borderBottom:'0'}}> */}
         <StaticImage
           className="logo1"
           src="../../static/assets/Cuttr-logo-wht.svg"
           alt="Default Image"
-          style={{ height: 'auto', maxWidth: '150px', position: '', top: '', left: '', zIndex: 1, borderRadius: '2%', opacity: '0.9', background: 'transparent', margin: '0 2vw 0 1vw', opacity:'.8', }}
+          style={{ height: 'auto', maxWidth: '130px', position: '', top: '', left: '', zIndex: 1, borderRadius: '2%', opacity: '0.9', background: 'transparent', margin: '0 2vw 0 2vw', opacity:'.8', }}
         />
-        </Link>
+        {/* </Link> */}
 
         <input
           ref={searchRef}
@@ -212,23 +217,48 @@ const Map = ({ location }) => {
           onChange={handleSearchChange}
         />
 
-        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.4vw,2.2rem)' }} onClick={handleMeasureStart}>Size Yard</button>
+        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>Size Yard</button>
 
         <button className="button" style={{ padding: '.3vh 5px', fontSize: 'clamp(.7rem,1.2vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
 
 
+
+        <div className="faqblock" style={{width:'100%', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'', left:'0' }}>
+
+
+<input type="checkbox" id="help" name="help" className="questions" />
+
+<label htmlFor="help" className=" font plus help" style={{ width:'24px', fontSize:'24px', display:'grid', placeContent:'center', color:'#fff', border:'1px solid', borderRadius:'50%', padding:'2px 15px', position:'', left:'0', top:'',}}>?</label>
+
+
+<div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
+<ul className="bullet panel" style={{padding:'2%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
+<li style={{ display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Locate your property on the map and zoom in to 100%</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Click the 'Size Yard' button</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Click on the boundaries of your yard dropping points at each boundary</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Once you've connected the dots, it will show you the total footage of your yard</li>
+</ul>
+</div>
+</div>
+
+
+
       </div>
       
-      <div style={{ position: 'absolute', bottom: '16vh', left: '1vw', background: '#fff', padding: '4px 10px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '10', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
+
+      
+      <div style={{ position: 'absolute', top: '13vh', left: '55px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
         <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
         <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert Text</label>
       </div>
 
-      <Link to='/contact' state={{modal: true}} className="print hover" style={{ display: 'flex',  color: '#fff', alignItems:'center', padding:'1vh 3vw', maxWidth:'', minWidth:'', textDecoration:'underline', borderRadius:'12px', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '14vh', right: '0', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900' }}>
+
+      <Link to='/contact' state={{modal: true}} className="print hover" style={{ display: 'flex',  color: '#fff', alignItems:'center', padding:'1vh 3vw', maxWidth:'', minWidth:'', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}>
+      <div className="button glow font" style={{ position: 'absolute', bottom: '6vh', right: '0', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900' }}>
     Cut My Grass!
       </div>
       </Link>
+    
 
     </>
   );
