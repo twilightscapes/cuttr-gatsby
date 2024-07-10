@@ -212,9 +212,6 @@ const Layout = ({ children }) => {
 <label id="menuicon" htmlFor="openSidebarMenu" className="sidebarIconToggle1  " style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex:'10000', marginTop: '5px', textAlign: 'center', color:'#fff', height:'', cursor:'pointer' }}>
           <BsLayoutSidebarInsetReverse style={{ height: '28px', width:'28px', color:'#ddd', filter:'drop-shadow(0px 1px 0px var(--theme-ui-colors-textShadow))' }} />
           <span className="themetext">Menu</span>
-
-
-
           </label>
 ) : (
 ""
@@ -231,7 +228,7 @@ const Layout = ({ children }) => {
 
 {(showNav === false || socialMenuPages.some(page => currentPage.startsWith(page)) || showNav !== false) ? (
 
-<div id="missioncontrol2" className="sitecontrols" style={{position:'fixed', top:'0', right:'0', zIndex:'10', display: 'flex', justifyContent: 'space-around', color:'#fff', fontSize: 'clamp(.8rem, 2.3vw, 2.5rem)', gap: '3vw', textAlign: 'center', maxHeight: '', alignItems: 'center', paddingTop: '5px', paddingRight:'80px' }}>
+<div id="missioncontrol2" className="sitecontrols" style={{position:'fixed', top:'0', right:'0', zIndex:'10', display: 'flex', justifyContent: 'space-around', color:'#fff', fontSize: 'clamp(.8rem, 2.3vw, 2.5rem)', gap: '3vw', textAlign: 'center', maxHeight: '', alignItems: 'center', paddingTop: '5px', paddingRight:'10px' }}>
 
 {/* {showSearch ? (
                 <div className="searchIcon">
@@ -245,14 +242,23 @@ const Layout = ({ children }) => {
               )} */}
 
 
-<div>
+{/* <div>
   <Theme style={{}} />
-</div>
+</div> */}
 
 {showSwipe === true || socialMenuPages.some(page => currentPage.startsWith(page)) || showSwipe !== false ? (
   <Switch />
 ) : (
   ""
+)}
+
+{!showNav2 ? (
+<label id="menuicon" htmlFor="openSidebarMenu" className="sidebarIconToggle1  " style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex:'10000', marginTop: '5px', textAlign: 'center', color:'#fff', height:'', cursor:'pointer' }}>
+          <BsLayoutSidebarInsetReverse style={{ height: '28px', width:'28px', color:'#ddd', filter:'drop-shadow(0px 1px 0px var(--theme-ui-colors-textShadow))' }} />
+          <span className="themetext">Menu</span>
+          </label>
+) : (
+""
 )}
 
 </div>
