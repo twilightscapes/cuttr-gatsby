@@ -22,6 +22,13 @@ const IndexPage = () => {
   
       </Helmet>
       <Seo title="DogPoopers YardStick" />
+
+      <Seo
+      title="CUTTR - Lawn Care Made Easy"
+      description="Discover the simplicity of yard sharing to get your lawn serviced on demand"
+      image='https://cuttr.app/assets/default-og-image.webp'
+    />
+
       <section className="outer section">
         <div className="container" style={{ padding: '0', height: 'calc(100vh - 60px)', position:'relative' }}>
           <Map location={location} onMapUpdate={handleMapUpdate} />
