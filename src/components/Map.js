@@ -194,12 +194,12 @@ const Map = ({ location }) => {
 
       <div style={{ position: 'absolute', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', margin:'0 auto', padding:'0 0 4px 0' }}>
 
-      <Link to="/" aria-label="Link to Top" title="Back to Top">
+      <Link to="/" aria-label="Link to Top" title="Back to Top" style={{textDecoration:'none', borderBottom:'0'}}>
         <StaticImage
           className="logo1"
           src="../../static/assets/Cuttr-logo-wht.svg"
           alt="Default Image"
-          style={{ height: 'auto', maxWidth: '150px', position: '', top: '', left: '', zIndex: 1, borderRadius: '2%', opacity: '0.9', background: 'transparent', margin: '0 2vw 0 1vw', opacity:'.8' }}
+          style={{ height: 'auto', maxWidth: '150px', position: '', top: '', left: '', zIndex: 1, borderRadius: '2%', opacity: '0.9', background: 'transparent', margin: '0 2vw 0 1vw', opacity:'.8', }}
         />
         </Link>
 
