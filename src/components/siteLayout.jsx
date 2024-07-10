@@ -122,12 +122,7 @@ const Layout = ({ children }) => {
 
 
 
-{/* <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-iKnH_TwzkJytZvQiFNxdp_WQMlsJ4VQ&amp;libraries=geometry&amp;callback=initMap"
-    async=""
-    defer=""
-  ></script>
-  <script src="https://cdn.jsdelivr.net/npm/measuretool-googlemaps-v3/lib/MeasureTool.min.js"></script> */}
+
 
 
 
@@ -188,7 +183,7 @@ const Layout = ({ children }) => {
               {/* <li key="demo"><Link to="/pirate">View Demo</Link></li> */}
             </ul>
 
-            <div id="missioncontrol" className="missioncontrol sitecontrols" style={{ display: 'flex', justifyContent: 'space-around', fontSize: 'clamp(.8rem, 2.3vw, 2.5rem)', gap: '3vw', textAlign: 'center', maxHeight: '', alignItems: 'center', paddingTop: '5px', paddingRight:'5vw' }}>
+            <div id="missioncontrol" className="missioncontrol sitecontrols" style={{ display: 'flex', justifyContent: 'space-around', fontSize: 'clamp(.8rem, 2.3vw, 2.5rem)', gap: '5vw', textAlign: 'center', maxHeight: '', alignItems: 'center', paddingTop: '5px', paddingRight:'1vw' }}>
 
               {showSearch ? (
                 <div className="searchIcon">
@@ -212,6 +207,18 @@ const Layout = ({ children }) => {
               ) : (
                 ""
               )}
+
+{showNav2 ? (
+<label id="menuicon" htmlFor="openSidebarMenu" className="sidebarIconToggle1  " style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex:'10000', marginTop: '5px', textAlign: 'center', color:'#fff', height:'', cursor:'pointer' }}>
+          <BsLayoutSidebarInsetReverse style={{ height: '28px', width:'28px', color:'#ddd', filter:'drop-shadow(0px 1px 0px var(--theme-ui-colors-textShadow))' }} />
+          <span className="themetext">Menu</span>
+
+
+
+          </label>
+) : (
+""
+)}
 
             </div>
 
@@ -443,11 +450,7 @@ const Layout = ({ children }) => {
           <>{/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}</>
           <label htmlFor="openSidebarMenu" className="backdrop1"></label>
 
-          <label id="menuicon" htmlFor="openSidebarMenu" className="sidebarIconToggle  " style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex:'10000', marginTop: '0px', textAlign: 'center', color:'#fff', height:'' }}>
-          <BsLayoutSidebarInsetReverse style={{ height: '30px', width:'30px', color:'#fff', filter:'drop-shadow(0px 1px 0px var(--theme-ui-colors-textShadow))' }} />
-          <span className="themetext">Menu</span>
-
-          </label>
+          
 
 
 

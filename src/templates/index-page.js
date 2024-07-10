@@ -26,8 +26,8 @@ import { MdOutlineCleaningServices } from "react-icons/md";
 import { PiCalendarDuotone } from "react-icons/pi";
 import { AiOutlineAudioMuted, AiOutlineGift } from 'react-icons/ai';
 import { StaticImage } from "gatsby-plugin-image"
-import Faqs from "../components/services"
-import NoDogs from "../components/panels"
+// import Faqs from "../components/services"
+// import NoDogs from "../components/panels"
 
 
 
@@ -636,11 +636,11 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 
 
 
-  <div className="nameblock flexcheek" style={{position:'', top:'0', marginTop: '', padding: '1rem 0 0 0', maxHeight: '', fontSize: 'clamp(1rem, 1.4vw, 3.2rem)',  borderRadius: 'var(--theme-ui-colors-borderRadius)' }}>
+  <div className="nameblock flexcheek" style={{position:'', top:'0', marginTop: '', padding: '0 0 0 0', maxHeight: '', fontSize: 'clamp(1rem, 1.4vw, 3.2rem)',  borderRadius: 'var(--theme-ui-colors-borderRadius)' }}>
 
 
   <div className=" mob print" style={{ position:'sticky', top:'0', fontSize: 'clamp(1rem, 1.5vw, 3.2rem)', textAlign:'' }}>
-      <h1 className="title1" style={{ fontSize: 'clamp(1.4rem, 2.5vw, 3rem)', textWrap:'balance', textAlign:'center', lineHeight:'1.2', textShadow:'rgb(0, 0, 0) 0px 2px 3px', color:'#fff' }}>{frontmatter.tagline}</h1>
+      <h1 className="title1 glow" style={{ fontSize: 'clamp(1.4rem, 2.5vw, 3rem)', fontStyle:'normal', textWrap:'balance', textAlign:'center', lineHeight:'1.2', color:'#fff' }}>{frontmatter.tagline}</h1>
 
 
 
@@ -658,7 +658,7 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 
 
 
-      <div className="flexcheek mob2 print" style={{position:'', top:'0', minWidth:'500px', overflow:'', marginBottom:'', paddingTop:'2vh', borderRadius:'var(--theme-ui-colors-borderRadius)',
+      <div className="flexcheek mob2 print" style={{position:'', top:'0', minWidth:'500px', overflow:'', marginBottom:'', paddingTop:'0', borderRadius:'var(--theme-ui-colors-borderRadius)',
       }}>
 {/* {SecondaryImage ? (
             <GatsbyImage
@@ -671,7 +671,7 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
             ""
           )} */}
 
-<h3 style={{textAlign:'center', fontSize: 'clamp(1.3rem, 2.4vw, 3rem)'}}><a href="tel:6013851781">Call (601) 385-1781</a></h3>
+<h3 className="glow font" style={{textAlign:'center', fontSize: 'clamp(1.3rem, 2.4vw, 3rem)', fontStyle:'normal', margin:'2vh 0'}}><a href="tel:6013851781">Call (601) 385-1781</a></h3>
 
 
 <ul className="tags" style={{maxWidth:'clamp(380px, 90%, 600px)', padding: '2%'}}>
@@ -790,15 +790,15 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
   {/* <h2 style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 3vw', maxWidth:'80%', margin:'2px auto', textDecoration:'none', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1.4rem, 3vw, 2.8rem)', color:'#fff' }}>Get Started Today!</h2> */}
 
 
-  <div className="" style={{position:'', top:'', width:'100vw', padding: '1vh 2vh', margin:'0 auto', maxHeight: '', fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)', textAlign:'center', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
+  {/* <div className="" style={{position:'', top:'', width:'100vw', padding: '1vh 2vh', margin:'0 auto', maxHeight: '', fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)', textAlign:'center', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
     <h2 className="glow">Get Started Today!</h2>
-  </div>
+  </div> */}
+<br />
 
-
-<div className="numblist1" style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 0', textDecoration:'none', width:'100%', borderRadius:'12px', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1.6rem, 2.5vw, 2.8rem)',textShadow:'none' }}>
-<span>Let's figure out your yard size</span>
-{/* <br />Open the Dog Pooper's yard sizing tool. */}
-</div>
+{/* <div className="numblist1" style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 2%', textDecoration:'none', width:'100%', borderRadius:'12px', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1.6rem, 2.5vw, 2.8rem)',textShadow:'none' }}>
+<span>Determine the size of your yard using our Yard Stick technology</span>
+<br />Open the Dog Pooper's yard sizing tool.
+</div> */}
 
 
 
@@ -823,9 +823,9 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 
   <div className="flexbutt" style={{ padding: " 0", width:'100%', maxWidth: "100vw", margin: "0 auto", display: "", flexDirection: "", justifyContent: "", alignItems:'', gap:'2vw', }}>
 
-<div style={{ padding: "0 10px", width:'100vw',maxWidth: "100vw", margin: "0 auto", display: "", flexDirection: "", justifyContent: "", alignItems:'', gap:'2vw', }}>
+<div style={{ padding: "0 10px", width:'100vw',maxWidth: "100vw", margin: "0 auto", display: "", flexDirection: "", justifyContent: "", alignItems:'', gap:'0', }}>
   
-<div style={{ display: 'flex', justifyContent: 'center', position:'relative', alignItems:'center', padding:'4px 1rem 0 1rem', textDecoration:'none', width:'80%', borderRadius:'12px 12px 0 0', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1vw, 1.8rem)', background:'rgba(8, 44, 20, 0.9)',  backdropFilter: 'blur(4px)', border:'0px solid #333', color:'#fff' , gap:''}}>
+{/* <div style={{ display: 'flex', justifyContent: 'center', position:'relative', alignItems:'center', padding:'4px 1rem 0 1rem', textDecoration:'none', width:'80%', borderRadius:'12px 12px 0 0', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1vw, 1.8rem)', background:'rgba(8, 44, 20, 0.9)',  backdropFilter: 'blur(4px)', border:'0px solid #333', color:'#fff' , gap:''}}>
 
 <div style={{transform:'rotate(-45deg)', position:'relative', top:'-5px', right:'5px', }}>Ruff!<br />|</div>
 
@@ -834,31 +834,33 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 <div className="" style={{display:'flex', flexDirection:'column', padding:'0', margin:'0', gap:'5px', alignItems:'center', position:'relative',fontSize:'clamp(1.3rem, 2.2vw, 2.8rem)', padding:'0', margin:'0', lineHeight:'1'}}>
   
   <span className=" font">Dog Poopers YardStick</span>
-  {/* <div style={{fontSize:'50%', posiition:'absolute', top:'-10px'}}>™</div> */}
 <div style={{fontSize:'clamp(1rem, 1.5vw, 2.2rem)', padding:'4px 0 0 0', margin:'0', lineHeight:'1'}}>Yard Sizing Tool</div>
 </div>
 
-</div>
+</div> */}
 
-    <iframe title="location map" className="virtualtour flexcheek" width="100%" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://dogpoopers.com/map" allowFullScreen="true" loading="lazy" origin="https://dogpoopers.com" style={{maxWidth:'100%', minWidth:'100%', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
+    <iframe title="location map" className=" flexcheek" width="100%" height="500" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="/map" allowFullScreen={true} loading="lazy" origin="https://dogpoopers.com" style={{maxWidth:'100%', minWidth:'100%', minHeight:'60vh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
     
     
 </div>
 
-    <div className="flexcheek" style={{width:'400px', marginRight:'2%'}}>
+    <div className="flexcheek" style={{maxWidth:'100%', gap:'', paddingRight:''}}>
     
     {/* <StaticImage src="../../static/assets/measure-tool.png" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} /> */}
 
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 1vw', textDecoration:'none', width:'80%', borderRadius:'12px', margin:'50px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1vw, 1.8rem)', background: 'rgba(8, 44, 20, 0.9)',  backdropFilter: 'blur(4px)', border:'1px solid #333', color:'#fff' }}>
-    <TbRulerMeasure style={{marginRight:'8px', fontSize:'50px'}} />Using Dog Poopers YardStick tool</div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 1vw', textDecoration:'none', width:'95%', borderRadius:'12px', margin:'50px auto 0 auto', textAlign:'center', fontSize:'clamp(1.5rem, 2vw, 1.8rem)', background: 'rgba(8, 44, 20, 0.9)',  backdropFilter: 'blur(4px)', border:'1px solid #333', color:'#fff' }}>
+
+  Size Your Yard<br /></div>
 
 
 
-     <ul className="bullet panel" >
-<li style={{fontSize:'clamp(1rem, 1vw, 1.8rem)', display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'1.2rem'}}>💩</span> Locate your property on the map and zoom in to 100%</li>
-<li style={{fontSize:'clamp(1rem, 1vw, 1.8rem)', display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'1.2rem'}}>💩</span> Click the 'Size My Yard' button</li>
-<li style={{fontSize:'clamp(1rem, 1vw, 1.8rem)', display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'1.2rem'}}>💩</span> Click on the boundaries of your yard dropping points at each boundary</li>
-<li style={{fontSize:'clamp(1rem, 1vw, 1.8rem)', display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'1.2rem'}}>💩</span> Once you've connected the dots, it will show you the total footage of your yard</li>
+
+
+     <ul className="bullet" style={{padding:'2%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)'}} >
+{/* <li style={{ display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'2rem'}}>💩</span> Locate your property on the map and zoom in to 100%</li>
+<li style={{display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'2rem'}}>💩</span> Click the 'Yard Stick' button</li>
+<li style={{display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'2rem'}}>💩</span> Click on the boundaries of your yard dropping points at each boundary</li>
+<li style={{display:'flex', alignItems:'center', gap:'10px'}}><span style={{fontSize:'2rem'}}>💩</span> Once you've connected the dots, it will show you the total footage of your yard</li> */}
 </ul>
   
     </div>
@@ -866,22 +868,24 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
   </div>
 
 
-  <div className="numblist1" style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 0', textDecoration:'none', width:'100%', borderRadius:'12px', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1.6rem, 2.5vw, 2.8rem)',textShadow:'none' }}>
+  {/* <div className="numblist1" style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 0', textDecoration:'none', width:'100%', borderRadius:'12px', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1.6rem, 2.5vw, 2.8rem)',textShadow:'none' }}>
 
   <span>Now, let's pick your plan!</span>
-  </div>
+  </div> */}
 
 <div>
-  <input type="checkbox" id="getstarted" name="q"  className="questions" />
 
-  <label for="getstarted" className=" button " style={{cursor:'pointer'}}>
-  {/* <div style={{transform:'rotate(-45deg)', position:'relative', top:'-5px', right:'5px', }}>Ruff!<br />|</div> */}
+
+
+  {/* <br />
+  <br />
+  
     
-    {/* <TbRulerMeasure style={{marginRight:'5px', fontSize:'50px'}} /> */}
-    <span className="font" style={{fontSize:'clamp(1.8rem, 2.5vw, 2.8rem)'}}>Choose Your Plan</span>
-  </label>
 
-<div className="answers" style={{width:'100%', padding:'0 ', margin:'0 auto'}}>
+<div className="font glow" style={{fontSize:'clamp(1.8rem, 2.5vw, 2.8rem)', fontStyle:'normal', margin:'2vh', color:'#fff'}}>Choose Your Plan</div>
+
+
+<div className="answers1" style={{width:'100%', padding:'0 ', margin:'0 auto'}}>
 
 
 <div style={{borderRadius:'12px', padding:'5px', background:'rgba(8, 44, 20, 0.9)', width:'99vw', margin:'0 auto'}}>
@@ -895,9 +899,9 @@ publishable-key="pk_live_51O3tWYKHJvXfkmw3F98KZ7I7367B5T8zSl7qIWhmDzP5o4XR4hRlCW
 <br />
 <span style={{textShadow:'none', fontWeight:'bold',fontSize:'clamp(1rem, 1.6vw, 2rem)'}}>More Options:</span>
 <div className="flexbutt hover" style={{margin:'2vh auto'}} >
-<Link to='/longterm' state={{modal: true}} className="print hover" style={{ display: 'flex',  color: '#fff', alignItems:'center', padding:'1vh 3vw', maxWidth:'80%', minWidth:'350px', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}><PiCalendarDuotone style={{fontSize:'30px', marginRight:'1rem'}} /> Long-term plans save even more!</Link>
-<Link to='/single' state={{modal: true}} className="print hover" style={{ display: 'flex', alignItems:'center',  color: '#fff', padding:'1vh 3vw', maxWidth:'80%', minWidth:'350px', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}><MdOutlineCleaningServices style={{fontSize:'30px', marginRight:'1rem'}} /> Just need a single cleaning?</Link>
-<Link to='/gifts' state={{modal: true}} className="print hover" style={{ display: 'flex', color: '#fff', padding:'1vh 3vw', maxWidth:'80%', minWidth:'350px', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}><AiOutlineGift style={{fontSize:'30px', marginRight:'1rem'}} />Gift certificates are available</Link>
+<Link to='/longterm' state={{modal: false}} className="print hover" style={{ display: 'flex',  color: '#fff', alignItems:'center', padding:'1vh 3vw', maxWidth:'80%', minWidth:'350px', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}><PiCalendarDuotone style={{fontSize:'30px', marginRight:'1rem'}} /> Long-term plans save even more!</Link>
+<Link to='/single' state={{modal: false}} className="print hover" style={{ display: 'flex', alignItems:'center',  color: '#fff', padding:'1vh 3vw', maxWidth:'80%', minWidth:'350px', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}><MdOutlineCleaningServices style={{fontSize:'30px', marginRight:'1rem'}} /> Just need a single cleaning?</Link>
+<Link to='/gifts' state={{modal: false}} className="print hover" style={{ display: 'flex', color: '#fff', padding:'1vh 3vw', maxWidth:'80%', minWidth:'350px', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}><AiOutlineGift style={{fontSize:'30px', marginRight:'1rem'}} />Gift certificates are available</Link>
 </div>
 
 
@@ -907,10 +911,10 @@ publishable-key="pk_live_51O3tWYKHJvXfkmw3F98KZ7I7367B5T8zSl7qIWhmDzP5o4XR4hRlCW
 
 </div>
 
-</div>
+</div>*/}
 
 </div>
-</div>
+</div> 
 
 
 
@@ -957,20 +961,19 @@ publishable-key="pk_live_51O3tWYKHJvXfkmw3F98KZ7I7367B5T8zSl7qIWhmDzP5o4XR4hRlCW
 
 
 
-<div className="nameblock flexcheek" style={{position:'', top:'', width:'100vw', padding: '1vh 2vh', margin:'0 auto', maxHeight: '', fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)', textAlign:'center', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
+{/* <div className="nameblock flexcheek" style={{position:'', top:'', width:'100vw', padding: '1vh 2vh', margin:'0 auto 0 auto', maxHeight: '', fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)', textAlign:'center', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
     <h2 className="glow">How It Works</h2>
-  </div>
-<section id="SecondaryInfo4" order="" className="nameblock" style={{margin:'0 auto 0 auto', padding:'0 4% 10vh 0',alignContent:'center', display:'grid', textAlign:'left', justifyContent:'center', verticalAlign:'center',
+  </div> */}
+
+
+{/* <section id="SecondaryInfo4" order="" className="nameblock" style={{margin:'0 auto 0 auto', padding:'2vh 4% 10vh 0',alignContent:'center', display:'grid', textAlign:'left', justifyContent:'center', verticalAlign:'center',
   color:'var(--theme-ui-colors-text)',
   border:'0px solid red', 
   fontSize:'clamp(1rem, 1.8vw, 3.2rem)',
   background:'var(--theme-ui-colors-cardBg)',
   backdropFilter:'blur(8px)',
-  // border:'1px solid #333',
   borderRadius:'10px',
-  // textShadow:'0 2px 0px #000',
   maxWidth:'95%' ,
-  // border:'10px double var(--theme-ui-colors-buttonHoverBg)', borderRadius:'12px'
   }}>
 
 
@@ -983,8 +986,7 @@ publishable-key="pk_live_51O3tWYKHJvXfkmw3F98KZ7I7367B5T8zSl7qIWhmDzP5o4XR4hRlCW
 <div className="flexbutt" style={{gap:'10vw'}}>
 <div className="flexcheek mobileporkfat" style={{order:'', display:'flex', flexDirection:'column', justifyContent:'space-around'}}>
 <h2 style={{fontSize: 'clamp(1rem, 3vw, 2.2rem)'}}>Place Your Order:</h2> <p>Using the Dog Poopers website, simply select the service plan you desire. All plans are paid in advance.<br /><br />Schedule a cleaning using our easy online account tools to choose the service that work best for you. We offer flexible billing options to fit your needs.
-{/* <Link style={{display:'block', bottom:'0', right:'0', padding:'1rem 0', textAlign:'center'}}>Interested in longer 💩 plans?</Link> */}
-</p>
+
 
 <h2 style={{fontSize: 'clamp(1rem, 3vw, 2.2rem)'}}>Our Weekly Service:</h2> <p>Our friendly and professional team will arrive at your residence on Mondays and Thursdays. You don’t need to be home – just provide us access to your yard, and we’ll take care of the rest.<br /><br /> Your service will begin on one of those days and will continue as long as you wish. </p>
 
@@ -1002,13 +1004,12 @@ Let us take care of the mess so you can enjoy a spotless yard and more quality t
 
 <div className="flexcheek mobilepork" style={{display:'flex', gap:'2vw', flexDirection:'column', justifyContent:'space-between', fontSize: 'clamp(1rem, 1vw, 2.2rem)', textAlign:'left', padding:'1rem 0'}}> 
 
-<StaticImage src="../../static/assets/plans.png" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} />
-You're in control - start and stop your service as needed through the Dog Pooper Customer Portal.
+
 <StaticImage src="../../static/assets/dog-poop1.jpg" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} />
 Dog Poopers will scan your yard for hidden "bundles of joy", removing all the waste and leaving both you and your pet happy!
 
 <StaticImage src="../../static/assets/deluxe-promo.webp" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} />
-Go Deluxe - you deserve it!
+Monthly Packages include our PoopSpray™ service
 
 
 <StaticImage src="../../static/assets/report-card.webp" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} />
@@ -1016,27 +1017,22 @@ Dog Poopers provides a Poopers Report Card on each visit, keeping you involved w
 
 <StaticImage src="../../static/assets/happy-yard.webp" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} />
 Happy pets that will thank you for keeping their yard clean AND you can have company over again and not be embarrassed! 
-{/* <StaticImage src="../../static/assets/action2.webp" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} />
-You control your timeline (and everything else), not some billionaire appeasing stockholders or their bottomline.  */}
+
 </div>
 </div>
 
 
-</section>
+</section> */}
 
 
-<section id="" order="" className="nameblock" style={{margin:'0 auto 0 auto', padding:'0 4% 10vh 0',alignContent:'center', display:'grid', textAlign:'left', justifyContent:'center', verticalAlign:'center',
+{/* <section id="" order="" className="nameblock" style={{margin:'0 auto 0 auto', padding:'0 4% 10vh 0',alignContent:'center', display:'grid', textAlign:'left', justifyContent:'center', verticalAlign:'center',
   color:'var(--theme-ui-colors-text)',
   border:'0px solid red', 
   fontSize:'clamp(1rem, 1.8vw, 3.2rem)',
-
-  // border:'1px solid #333',
   borderRadius:'10px',
-  // textShadow:'0 2px 0px #000',
   maxWidth:'95%' ,
-  // border:'10px double var(--theme-ui-colors-buttonHoverBg)', borderRadius:'12px'
   }}>
-<h2 id="costs" className="letter" style={{fontSize:'clamp(1.4rem,2.9vw,3rem)', textAlign:'center'}}>Frequently Asked Questions</h2>
+<h2 id="costs" className="letter glow" style={{fontSize:'clamp(1.4rem,2.9vw,3rem)', textAlign:'center', fontStyle:'normal'}}>Frequently Asked Questions</h2>
 
           
 
@@ -1047,7 +1043,7 @@ You control your timeline (and everything else), not some billionaire appeasing 
 <div>
   <input type="checkbox" id="question4" name="q" className="questions" />
   <div className="plus">+</div>
-  <label for="question4" className="question">
+  <label htmlFor="question4" className="question">
     Do I have to be home?
   </label>
   <div className="answers">
@@ -1060,7 +1056,7 @@ You control your timeline (and everything else), not some billionaire appeasing 
 <div>
   <input type="checkbox" id="question2" name="q" className="questions" />
   <div className="plus">+</div>
-  <label for="question2" className="question">
+  <label htmlFor="question2" className="question">
     What if I have a locked gate or gate code?
   </label>
   <div className="answers">
@@ -1072,7 +1068,7 @@ You control your timeline (and everything else), not some billionaire appeasing 
 <div>
   <input type="checkbox" id="question1" name="q"  className="questions" />
   <div className="plus">+</div>
-  <label for="question1" className="question">
+  <label htmlFor="question1" className="question">
     Do you still pick up with heavy rains or storms?
   </label>
   <div className="answers">
@@ -1083,7 +1079,7 @@ Yes, we usually tough it out and do our pick ups in adverse weather. If for some
 <div>
   <input type="checkbox" id="question3" name="q" className="questions" />
   <div className="plus">+</div>
-  <label for="question3" className="question">
+  <label htmlFor="question3" className="question">
   Can you clean with our dogs in the yard?
   </label>
   <div className="answers">
@@ -1099,7 +1095,7 @@ Yes, we usually tough it out and do our pick ups in adverse weather. If for some
 <div>
   <input type="checkbox" id="question5" name="q" className="questions" />
   <div className="plus">+</div>
-  <label for="question5" className="question">
+  <label htmlFor="question5" className="question">
   Can I pause my service if I am out of town?
   </label>
   <div className="answers">
@@ -1114,7 +1110,7 @@ Yes, we usually tough it out and do our pick ups in adverse weather. If for some
 
 
 </div>
-</section>
+</section> */}
 
 
 
@@ -1126,11 +1122,11 @@ Yes, we usually tough it out and do our pick ups in adverse weather. If for some
 
 
 
-<div className="nameblock flexcheek" style={{position:'', top:'', marginTop: '', width:'100%', padding: '1vh 2vh', margin:'0 auto 5vh auto', maxHeight: '', fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)', textAlign:'center', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
+{/* <div className="nameblock flexcheek" style={{position:'', top:'', marginTop: '', width:'100%', padding: '1vh 2vh', margin:'0 auto 5vh auto', maxHeight: '', fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)', textAlign:'center', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
     <h2 className="glow">Our Happy Customers</h2>
-  </div>
+  </div> */}
 
-<div className="slider"
+{/* <div className="slider"
 style={{maxHeight:'500px', border:'0px solid', }}
 onWheel={handleScroll}
 ref={scrollRef}
@@ -1181,16 +1177,13 @@ ref={scrollRef}
 <blockquote style={{width:'85%', minWidth:'300px', position:'relative', fontsize:'clamp(.8rem, 1vw, 1.5rem)'}}>With three dogs, keeping the yard clean was a constant challenge. Dog Poopers made it easy and stress-free. Their team is friendly, and the results speak for themselves<span>- Happy dogs in Woolmarket</span></blockquote>
 </div>
 
-</div>
+</div> */}
 
 
 
 
 {showHomePosts ? (
   <>
-
-
-  
 <div className="nameblock flexcheek" style={{position:'', top:'', marginTop: '', width:'100%', padding: '1vh 2vh', margin:'0 auto', maxHeight: '',fontSize:'clamp(1.4rem,3.9vw,4rem)', textAlign:'center', position:'relative', top:'10vh', textShadow: '0 2px 3px #000', background:'rgba(8, 44, 20, 0.9)', backdropFilter:'blur(12px)', color:'#fff' }}>
     <h2 className="glow">Our Latest News</h2>
   </div>

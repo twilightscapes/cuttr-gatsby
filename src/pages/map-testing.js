@@ -16,18 +16,17 @@ const IndexPage = () => {
 
 
   return (
-    <>
+    <Layout>
       <Helmet>
-        <body id="body" className="homepage1 install noscroll" style={{ overflow: 'hidden', paddingTop:'' }} />
-  
+        <body id="body" className="homepage install noscroll" style={{ overflow: 'hidden', paddingTop:'' }} />
       </Helmet>
       <Seo title="DogPoopers YardStick" />
       <section className="outer section">
-        <div className="container" style={{ padding: '0', height: 'calc(100vh - 60px)', position:'relative' }}>
+        <div className="container" style={{ padding: '0', height:'calc(100vh - 60px)', position:'relative', overFlow:'hidden' }}>
           <Map location={location} onMapUpdate={handleMapUpdate} />
         </div>
       </section>
-    </>
+    </Layout>
   );
 };
 

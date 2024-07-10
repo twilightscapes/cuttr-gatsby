@@ -21,7 +21,11 @@ const Thanks = () => {
 
 <div style={{width:'90%', height:'100px', margin:'0 auto', textAlign:'center',}}>
 
-
+{/* <p>
+<strong>Hytron Manufacturing, Inc.</strong><br />
+15582 Chemical Lane<br />
+Huntington Beach, CA 92649<br />
+</p> */}
 
 
 <RiCheckboxCircleLine className="" 

@@ -15,8 +15,8 @@
     "defaultCollection": "",
     "showCollectionTitles": false,
     "navOptions": {
-      "showNav": true,
-      "showNav2": false,
+      "showNav": false,
+      "showNav2": true,
       "showFooterMenu": false
     },
     "featureOptions": {
@@ -24,11 +24,11 @@
       "showSearch": false,
       "showDates": false,
       "showTitles": true,
-      "showfooter": true,
+      "showfooter": false,
       "showSocial": false,
       "showVideoPlayer": false,
-      "showHomePosts": true,
-      "showProfile": true,
+      "showHomePosts": false,
+      "showProfile": false,
       "showDefault": false,
       "showSwipe": false
     },
@@ -39,7 +39,7 @@
       "ShowDisclaimer": false,
       "showLegal": true,
       "showConsent": false,
-      "startUrl": "/portal",
+      "startUrl": "/map",
       "showFeature": true,
       "showResume": false,
       "showLocation": false,

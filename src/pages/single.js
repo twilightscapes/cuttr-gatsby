@@ -13,7 +13,7 @@ const Driver = () => {
 <Helmet>
 
   
-<body id="body" className="homepage" />
+<body id="body" className="homepage1" />
 </Helmet>
 
  <Seo title={`Dog Poopers`} />
@@ -27,14 +27,14 @@ const Driver = () => {
 
     
 
-<div style={{width:'100%', height:'', margin:'0 auto', textAlign:'center',}}>
+<div style={{width:'100%', height:'', margin:'0 auto', textAlign:'center', background:'hsl(147, 61%, 26%)'}}>
 
- <StaticImage src="../../static/assets/dogpoopers-header-single.webp" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'0px solid !important', objectFit:'cover', margin:'0 auto'}} />
+ <StaticImage src="../../static/assets/dogpoopers-header-single.webp" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'0px solid !important', objectFit:'cover', margin:'0 auto 2vh auto'}} />
 
 <stripe-pricing-table pricing-table-id="prctbl_1PV8UQKHJvXfkmw3k3n8EWqb"
 publishable-key="pk_live_51O3tWYKHJvXfkmw3F98KZ7I7367B5T8zSl7qIWhmDzP5o4XR4hRlCWdsAdiLDaLZ3Kfal2jTTitRIDC2azwyuwgl00T2NoCR5m">
 </stripe-pricing-table>
-
+<div className="spacer33" style={{display:'block', height:''}} />
 
 
       {/* <h1 className="" style={{fontSize:'50px',}}>Jeff North Gulfport Route</h1>

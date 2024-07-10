@@ -80,18 +80,17 @@ Fax: (714) 903-4381</p>
           
 
 
-<div id="tour" className="virtualtour" style={{display:'flex', flexDirection:'column', gap:'1vw'}}>
+<div id="tour" className="" style={{display:'flex', flexDirection:'column', gap:'1vw'}}>
 
 {/* <iframe title="location map" className="virtualtour" width="800" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d218709.02813130492!2d-89.066156!3d30.443965!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1719269906271!5m2!1sen!2sus" allowFullScreen="" loading="lazy" origin="https://testing.hytronmanufacturing.com" style={{maxWidth:'100%', margin:'0 auto', border:'10px solid #333', borderRadius:'12px'}}></iframe> */}
 
-<iframe title="location map" className="virtualtour" width="800" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://dogpoopers.com/map" allowFullScreen="true" loading="lazy" origin="https://dogpoopers.com" style={{maxWidth:'100%', margin:'0 auto', border:'10px solid #333', borderRadius:'12px'}}></iframe>
+<iframe title="location map" className="" width="800" height="500" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="/map-headless" allowFullScreen="true" loading="lazy" origin="https://dogpoopers.com" style={{maxWidth:'100%', margin:'0 auto', border:'10px solid #333', borderRadius:'12px'}}></iframe>
 
-<p style={{textAlign:'center', fontWeight:'bold', padding:'0', margin:'0', lineHeight:'1', color:'#fff', fontSize:'clamp(1rem, 1.8vw, 3.2rem)'}}>Dog Poopers Yard Sizer</p>
+{/* <p style={{textAlign:'center', fontWeight:'bold', padding:'0', margin:'0', lineHeight:'1', color:'#fff', fontSize:'clamp(1rem, 1.8vw, 3.2rem)'}}>Dog Poopers Yard Sizer</p> */}
 
 <div className="flexbutt" style={{width:'100%', maxWidth:'', display:'flex', placeContent:'center', margin:'0 auto', gap:'1vw', position:'', zIndex:'' }}>
   
-  <div className="flexcheek" style={{width:''}}>
-    {/* <div className="plus">1</div> */}
+  {/* <div className="flexcheek" style={{width:''}}>
     <label for="question1" className="question" style={{width:'100%'}}>
       Locate your property on the map above
     <br /><br />
@@ -100,7 +99,7 @@ Fax: (714) 903-4381</p>
      Click on the boundaries of your yard dropping points at each boundary.
      <br /><br />Once you've connected the dots, it will show you the total footage of your yard.
      </label>
-  </div>
+  </div> */}
 
 
   {/* <div className="flexcheek" style={{width:''}}>

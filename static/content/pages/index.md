@@ -31,7 +31,7 @@ showPostContact: false
 profText: <p> </p>
 profTitle: We come and pick up the poop!
 tagline: Pet Waste Removal Service Mississippi Gulf Coast
-featuredImage: /assets/dogpoopers-nosey-header.webp
+featuredImage: /assets/header-lawncaresimple.webp
 secondaryImage: /assets/thankyou.webp
 scrollable: false
 portfolio:
@@ -42,7 +42,7 @@ slug: /
 
 excludeFromRSS: true
 skillsText: 
-underlayImage: /assets/dogpoopers-header.webp
+underlayImage: /assets/header-lawncaresimple.webp
 bumpertext: x
 cta:
   ctaText: Your Call To Action

@@ -43,7 +43,7 @@ const Search = () => {
 </Helmet>
       <Seo title="Search" />
 
-      <div className="post-container" id="posttop">
+      <div className="post-container" id="posttop" style={{paddingTop:'2vh'}}>
         {/* Pass isSliderVisible as a prop to BlogPosts */}
         <SearchPosts isSliderVisible={isSliderVisible} />
       </div>

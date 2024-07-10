@@ -1,264 +1,234 @@
-/* global google */
 import React, { useEffect, useRef, useState } from 'react';
-import { StaticImage } from "gatsby-plugin-image";
-
+import { StaticImage } from 'gatsby-plugin-image';
+import { Link } from 'gatsby-plugin-modal-routing-4'
 const Map = ({ location }) => {
   const mapRef = useRef(null);
   const searchRef = useRef(null);
   const [map, setMap] = useState(null);
-  const [drawingManager, setDrawingManager] = useState(null);
-  const [drawnShapes, setDrawnShapes] = useState([]);
-  const [center, setCenter] = useState(null);
-  const [zoom, setZoom] = useState(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const [measureTool, setMeasureTool] = useState(null);
+  const [geocoder, setGeocoder] = useState(null);
+  const [center, setCenter] = useState({ lat: 30.38, lng: -89.03 });
+  const [zoom, setZoom] = useState(12);
+  const [totalArea, setTotalArea] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedPlace, setSelectedPlace] = useState(null);
-  const [markers, setMarkers] = useState([]);
-  const [area, setArea] = useState(0);
-  const [distance, setDistance] = useState(0);
+  const [inverted, setInverted] = useState(false);
+  const [isGoogleLoaded, setIsGoogleLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const googleMapsApiKey = process.env.GATSBY_GOOGLE_MAPS_API_KEY;
   const mapStyle = [
-    { "featureType": "poi", "stylers": [{ "visibility": "off" }] },
-    { "featureType": "transit", "stylers": [{ "visibility": "off" }] },
-    { "featureType": "administrative", "elementType": "labels", "stylers": [{ "visibility": "off" }] },
-    { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "on" }] }
+    { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+    { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+    { featureType: 'administrative', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+    { featureType: 'road', elementType: 'labels', stylers: [{ visibility: 'on' }] },
   ];
 
-  const updateQueryString = (lat, lng, zoom, shapes, search) => {
+  const updateQueryString = (lat, lng, zoom, search) => {
     const params = new URLSearchParams(location.search);
     params.set('lat', lat);
     params.set('lng', lng);
     params.set('zoom', zoom);
-    params.set('drawnShapes', JSON.stringify(shapes));
-    params.set('search', search);
+    if (search) {
+      params.set('search', search);
+    } else {
+      params.delete('search');
+    }
     window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
   };
 
-  const updateAreaAndDistance = () => {
-    if (typeof google !== 'undefined') {
-      let totalArea = 0;
-      let totalDistance = 0;
-
-      drawnShapes.forEach((shape) => {
-        const path = shape.map((point) => new google.maps.LatLng(point.lat, point.lng));
-        const area = google.maps.geometry.spherical.computeArea(new google.maps.MVCArray(path));
-        totalArea += area;
-        
-        // Convert area from square meters to square feet (1 sq meter = 10.7639 sq feet)
-        const areaFeet = area * 10.7639;
-
-        for (let i = 0; i < path.length - 1; i++) {
-          totalDistance += google.maps.geometry.spherical.computeDistanceBetween(path[i], path[i + 1]);
-        }
-      });
-
-      setArea(totalArea);
-      setDistance(totalDistance);
-    }
+  const loadGoogleMapsScript = () => {
+    const googleMapsScript = document.createElement('script');
+    googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&libraries=geometry,drawing,places`;
+    googleMapsScript.async = true; // Load asynchronously
+    googleMapsScript.defer = true; // Ensure it's deferred
+    googleMapsScript.onload = () => {
+      setIsGoogleLoaded(true);
+      setIsLoading(false);
+    };
+    document.body.appendChild(googleMapsScript);
   };
 
-  const handleOverlayComplete = (event) => {
-    if (typeof google !== 'undefined') {
-      const newShape = event.overlay;
-      if (newShape.type === 'polygon') {
-        const path = newShape.getPath().getArray().map((latLng) => ({
-          lat: latLng.lat(),
-          lng: latLng.lng(),
-        }));
-        const updatedShapes = [...drawnShapes, path];
-        setDrawnShapes(updatedShapes);
-        updateQueryString(center.lat, center.lng, zoom, updatedShapes, searchQuery);
-        updateAreaAndDistance();
-        
-        newShape.getPath().addListener('set_at', () => {
-          setDrawnShapes((prevShapes) => {
-            const updated = prevShapes.map((item, index) => {
-              if (index === prevShapes.length - 1) {
-                return item.map((point, i) => ({
-                  lat: newShape.getPath().getAt(i).lat(),
-                  lng: newShape.getPath().getAt(i).lng(),
-                }));
-              }
-              return item;
-            });
-            return updated;
-          });
-          updateAreaAndDistance();
-        });
+  const initMap = () => {
+    const params = new URLSearchParams(location.search);
+    const lat = parseFloat(params.get('lat'));
+    const lng = parseFloat(params.get('lng'));
+    const initialZoom = parseInt(params.get('zoom'), 11);
+    const search = params.get('search');
 
-        newShape.getPath().addListener('insert_at', () => {
-          setDrawnShapes((prevShapes) => {
-            const updated = prevShapes.map((item, index) => {
-              if (index === prevShapes.length - 1) {
-                return item.map((point, i) => ({
-                  lat: newShape.getPath().getAt(i).lat(),
-                  lng: newShape.getPath().getAt(i).lng(),
-                }));
-              }
-              return item;
-            });
-            return updated;
-          });
-          updateAreaAndDistance();
-        });
+    const initialCenter = { lat: lat || 30.38, lng: lng || -89.03 };
+    const initialZoomLevel = initialZoom || 11;
 
-        newShape.getPath().addListener('remove_at', () => {
-          setDrawnShapes((prevShapes) => {
-            const updated = prevShapes.map((item, index) => {
-              if (index === prevShapes.length - 1) {
-                return item.map((point, i) => ({
-                  lat: newShape.getPath().getAt(i).lat(),
-                  lng: newShape.getPath().getAt(i).lng(),
-                }));
-              }
-              return item;
-            });
-            return updated;
-          });
-          updateAreaAndDistance();
-        });
+    const googleMap = new window.google.maps.Map(mapRef.current, {
+      center: initialCenter,
+      zoom: initialZoomLevel,
+      mapTypeId: window.google.maps.MapTypeId.HYBRID,
+      fullscreenControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      scaleControl: false,
+      zoomControl: false,
+      tilt: 0,
+      styles: mapStyle,
+    });
+
+    const googleMeasureTool = new window.MeasureTool(googleMap, {
+      contextMenu: false,
+      unit: 'imperial',
+    });
+
+    const googleGeocoder = new window.google.maps.Geocoder();
+
+    setMap(googleMap);
+    setMeasureTool(googleMeasureTool);
+    setGeocoder(googleGeocoder);
+
+    googleMap.addListener('center_changed', () => {
+      const newCenter = googleMap.getCenter().toJSON();
+      setCenter(newCenter);
+      updateQueryString(newCenter.lat, newCenter.lng, googleMap.getZoom(), searchQuery);
+    });
+
+    googleMap.addListener('zoom_changed', () => {
+      const newZoom = googleMap.getZoom();
+      setZoom(newZoom);
+      updateQueryString(googleMap.getCenter().lat(), googleMap.getCenter().lng(), newZoom, searchQuery);
+    });
+
+    googleMeasureTool.addListener('measure_end', (e) => {
+      if (e.result && e.result.area) {
+        const sqFeet = e.result.area.sqft;
+        setTotalArea(sqFeet);
       }
+    });
+
+    if (search) {
+      setSearchQuery(search);
+      searchRef.current.value = search; // Set initial value for search input
     }
+
+    const autocomplete = new window.google.maps.places.Autocomplete(searchRef.current);
+    autocomplete.bindTo('bounds', googleMap);
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry || !place.geometry.location) {
+        return;
+      }
+      googleMap.setCenter(place.geometry.location);
+      googleMap.setZoom(21); // Zoom to max level
+      setCenter(place.geometry.location.toJSON());
+      setZoom(21);
+      setSearchQuery(place.formatted_address);
+      updateQueryString(place.geometry.location.lat(), place.geometry.location.lng(), 21, place.formatted_address);
+    });
+
+    // Redraw the map on search
+    window.google.maps.event.trigger(googleMap, 'resize');
   };
+
+  useEffect(() => {
+    const measureToolScript = document.createElement('script');
+    measureToolScript.src = '/dist/gmaps-measuretool.umd.js';
+    measureToolScript.async = true;
+    measureToolScript.onload = () => {
+      loadGoogleMapsScript();
+    };
+    document.body.appendChild(measureToolScript);
+
+    return () => {
+      document.body.removeChild(measureToolScript);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isGoogleLoaded) {
+      initMap();
+    }
+  }, [isGoogleLoaded]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const lat = parseFloat(params.get('lat'));
     const lng = parseFloat(params.get('lng'));
-    const initialZoom = parseInt(params.get('zoom'), 10);
-    const loadedShapes = JSON.parse(params.get('drawnShapes') || '[]');
-    const loadedSearch = params.get('search') || '';
+    const zoom = parseInt(params.get('zoom'), 10);
+    const search = params.get('search');
 
-    if (!isNaN(lat) && !isNaN(lng) && !isNaN(initialZoom)) {
+    if (!isNaN(lat) && !isNaN(lng) && !isNaN(zoom)) {
       setCenter({ lat, lng });
-      setZoom(initialZoom);
-    } else {
-      setCenter({ lat: 30.38, lng: -89.03 });
-      setZoom(12);
+      setZoom(zoom);
     }
-
-    setDrawnShapes(loadedShapes);
-    setSearchQuery(loadedSearch);
+    if (search) {
+      setSearchQuery(search);
+    }
   }, [location.search]);
 
-  useEffect(() => {
-    const loadMap = () => {
-      if (!mapLoaded && typeof google !== 'undefined' && mapRef.current) {
-        const initialMap = new google.maps.Map(mapRef.current, {
-          center: center || { lat: 30.38, lng: -89.03 },
-          zoom: zoom || 12,
-          mapTypeId: google.maps.MapTypeId.HYBRID,
-          styles: mapStyle,
-          fullscreenControl: false,
-          mapTypeControl: false,
-          streetViewControl: false,
-          scaleControl: false,
-          zoomControl: false,
-          tilt: 0
-        });
-        setMap(initialMap);
-        setMapLoaded(true);
-
-        const drawingManager = new google.maps.drawing.DrawingManager({
-          drawingMode: google.maps.drawing.OverlayType.POLYGON,
-          drawingControl: true,
-          drawingControlOptions: {
-            position: google.maps.ControlPosition.TOP_CENTER,
-            drawingModes: [google.maps.drawing.OverlayType.POLYGON],
-          },
-          polygonOptions: {
-            editable: true,
-            draggable: true,
-          },
-        });
-        drawingManager.setMap(initialMap);
-        setDrawingManager(drawingManager);
-
-        google.maps.event.addListener(drawingManager, 'overlaycomplete', handleOverlayComplete);
-
-        google.maps.event.addListener(initialMap, 'center_changed', () => {
-          if (initialMap.getCenter()) {
-            setCenter(initialMap.getCenter().toJSON());
-            updateQueryString(initialMap.getCenter().lat(), initialMap.getCenter().lng(), initialMap.getZoom(), drawnShapes, searchQuery);
-          }
-        });
-
-        google.maps.event.addListener(initialMap, 'zoom_changed', () => {
-          setZoom(initialMap.getZoom());
-          updateQueryString(initialMap.getCenter().lat(), initialMap.getCenter().lng(), initialMap.getZoom(), drawnShapes, searchQuery);
-        });
-
-        if (searchRef.current) {
-          const autocomplete = new google.maps.places.Autocomplete(searchRef.current);
-          autocomplete.bindTo('bounds', initialMap);
-          autocomplete.addListener('place_changed', () => {
-            const place = autocomplete.getPlace();
-            if (place.geometry && place.geometry.location) {
-              initialMap.setCenter(place.geometry.location);
-              initialMap.setZoom(21); // Zoom to level 21
-              setCenter(place.geometry.location.toJSON());
-              setZoom(21);
-              setSearchQuery(searchRef.current.value);
-              setSelectedPlace(place);
-              updateQueryString(place.geometry.location.lat(), place.geometry.location.lng(), 21, drawnShapes, searchRef.current.value);
-              dropPin(place.geometry.location);
-            }
-          });
-        }
-      }
-    };
-
-    if (typeof google !== 'undefined' && !mapLoaded) {
-      loadMap();
-    }
-  }, [mapLoaded, center, zoom, location.search, drawnShapes, searchQuery]);
-
-  const dropPin = (location) => {
-    if (map) {
-      const marker = new google.maps.Marker({
-        position: location,
-        map: map,
-        title: selectedPlace?.name || '',
-        draggable: false,
-      });
-
-      setMarkers([...markers, marker]);
-    } else {
-      console.warn('Map not initialized yet. Marker cannot be dropped.');
+  const handleInvert = () => {
+    if (measureTool) {
+      setInverted(!inverted);
+      measureTool.setOption('invertColor', !inverted);
     }
   };
 
-  useEffect(() => {
-    updateAreaAndDistance();
-  }, [drawnShapes]);
+  const handleMeasureStart = () => {
+    if (measureTool) {
+      measureTool.start();
+    }
+  };
 
-  if (!center || !zoom) {
-    return null;
+  const handleMeasureEnd = () => {
+    if (measureTool) {
+      measureTool.end();
+    }
+  };
+
+  const handleSearchChange = () => {
+    setSearchQuery(searchRef.current.value);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'center', background: '#fff', alignItems: 'center' }}>
+    <>
+      <div className="virtualtour" ref={mapRef} style={{ width: '100%', height: '100dvh', position: 'relative' }}></div>
+
+      <div style={{ position: 'absolute', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', margin:'0 auto', padding:'0 0 4px 0' }}>
+
+      <Link to="/" aria-label="Link to Top" title="Back to Top">
+        <StaticImage
+          className="logo1"
+          src="../../static/assets/Cuttr-logo-wht.svg"
+          alt="Default Image"
+          style={{ height: 'auto', maxWidth: '150px', position: '', top: '', left: '', zIndex: 1, borderRadius: '2%', opacity: '0.9', background: 'transparent', margin: '0 2vw 0 1vw', opacity:'.8' }}
+        />
+        </Link>
+
         <input
           ref={searchRef}
           type="text"
           placeholder="Enter your address"
+          style={{ width: '80%', maxWidth: '300px', marginTop:'', padding: '5px', borderRadius: '3px', border: '1px solid #ccc', color: '#222', opacity:'.8' }}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onBlur={() => updateQueryString(center.lat, center.lng, zoom, drawnShapes, searchQuery)}
-          style={{ width: '380px', marginBottom: '', padding: '5px', color:'#222' }}
+          onChange={handleSearchChange}
         />
+
+        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,2vw,2.2rem)' }} onClick={handleMeasureStart}>Size Yard</button>
+
+        <button className="button" style={{ padding: '1vh 5px', fontSize: 'clamp(.7rem,1.4vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
+
+
       </div>
-      <div className="virtualtour" ref={mapRef} style={{ width: '100%', height: 'calc(100vh - 150px)', position: 'relative', zIndex: '0' }}></div>
-      <StaticImage
-        className="logo1"
-        src="../../static/assets/Cuttr-map.svg"
-        alt="Default Image"
-        style={{ height: 'auto', maxHeight: '', margin: '0 auto', zIndex: '5' }}
-      />
-      <div>Total Area: {area.toFixed(2)} sq feet</div>
-      <div>Total Distance: {distance.toFixed(2)} meters</div>
-    </div>
+      
+      <div style={{ position: 'absolute', bottom: '0', left: '1vw', background: '#fff', padding: '4px 10px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.7', zIndex: '10', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
+        <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
+        <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert Text</label>
+      </div>
+
+      <div className="button glow font" style={{ position: 'absolute', bottom: '-2vh', right: '2vw', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.7', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)' }}>
+        Cut My Grass!
+      </div>
+
+    </>
   );
 };
 
