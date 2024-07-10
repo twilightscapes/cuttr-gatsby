@@ -224,8 +224,8 @@ const Map = ({ location }) => {
         <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert Text</label>
       </div>
 
-      <Link to='/contact' state={{modal: true}} className="print hover" style={{ display: 'flex',  color: '#fff', alignItems:'center', padding:'1vh 3vw', maxWidth:'', minWidth:'', margin:'2px auto', textDecoration:'underline', borderRadius:'12px', margin:'5px auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '6vh', right: '0', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900' }}>
+      <Link to='/contact' state={{modal: true}} className="print hover" style={{ display: 'flex',  color: '#fff', alignItems:'center', padding:'1vh 3vw', maxWidth:'', minWidth:'', textDecoration:'underline', borderRadius:'12px', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1.2vw, 2rem)', background: 'rgba(0,0,0,0.90)',  backdropFilter: 'blur(4px)', border:'1px solid #333' }}>
+      <div className="button glow font" style={{ position: 'absolute', bottom: '14vh', right: '0', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900' }}>
     Cut My Grass!
       </div>
       </Link>
