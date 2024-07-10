@@ -254,7 +254,7 @@ const Map = ({ location }) => {
 
 
       <Link to='/contact' state={{modal: true}} className="print hover" style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center'}}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '0', left:'', right: '', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900', width:'' }}>
+      <div className="button glow font" style={{ position: 'absolute', bottom: '0', left:'', right: '', background: '', padding: '2vh 2vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900', width:'' }}>
     Cut My Grass From Space
       </div>
       </Link>
