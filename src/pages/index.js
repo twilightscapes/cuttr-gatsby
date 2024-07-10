@@ -24,10 +24,10 @@ const IndexPage = () => {
         <body id="body" className="homepage install noscroll" style={{ overflow: 'hidden', paddingTop:'' }} />
   
       </Helmet>
-      <Seo title="DogPoopers YardStick" />
+  
 
       <Seo
-      title="CUTTR - Lawn Care Made Easy"
+      title="Cuttr - Lawn Care Made Easy"
       description="Discover the simplicity of yard sharing to get your lawn serviced on demand"
       image='https://cuttr.app/assets/default-og-image.webp'
     />
