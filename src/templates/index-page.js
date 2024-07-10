@@ -505,7 +505,7 @@ display:'flex', justifyContent:'center', maxHeight:'80px !important', height:'15
   return (
     <Layout>
       <Helmet>
-        <body id="body" className="homepage intro" />
+        <body id="body" className="homepage intro install noscroll" />
       </Helmet>
 
       {/* <Seo

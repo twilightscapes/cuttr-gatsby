@@ -16,7 +16,7 @@ body.scroll footer{position:sticky !important;} */
 /* body.homepage:after{content: (''); background-color:inherit; height: 100vh; width:100%; background-size: cover; position:fixed; top:0; left:0; z-index:-1; } */
 
 /* body.homepage{min-height: 100vh;} */
-
+body.noscroll{height:100dvh !important; width:100dvw !important; overflow: hidden !important;}
 
 body.install #gobacker1, body.install footer, body.install #pwabanner  {display:none !important; color: hsl(96, 42%, 29%);}
 
