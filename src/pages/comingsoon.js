@@ -27,21 +27,21 @@ const Thanks = () => {
 Huntington Beach, CA 92649<br />
 </p> */}
 
-
-<RiCheckboxCircleLine className="" 
+<div className="spacer33"></div> 
+{/* <RiCheckboxCircleLine className="" 
         style={{
           fontSize: "150px",
-      //     color: "var(--primary-color)",
+          color: "var(--primary-color)",
           margin:'0 auto',
           textAlign:'center'
         }}
-      />
+      /> */}
       <h1 className="" style={{fontSize:'50px',}}>Coming Soon</h1>
-      <div className="spacer33"></div> 
-      <Link to="/" className="button">
+      
+      {/* <Link to="/" className="button">
         <RiArrowLeftSLine className="icon -left" />
         Back to Homepage
-      </Link>
+      </Link> */}
 
 
 </div>
