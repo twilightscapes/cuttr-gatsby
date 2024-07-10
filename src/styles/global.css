@@ -9,6 +9,10 @@ html{min-height:100dvh; background:var(--theme-ui-colors-siteBackground); z-inde
 
 body{z-index: 0; background:var(--theme-ui-colors-siteBackground);overscroll-behavior:none; min-height:100dvh; max-width: 100dvw; overflow-x: hidden;}
 
+
+
+
+
 /* body.scroll {overflow:hidden !important;} */
 /* body.scroll  {overflow-x:hidden !important; } */
 /* body.scroll #___gatsby{overflow-y:hidden !important;}
@@ -2260,7 +2264,16 @@ body:has(.ReactModal__Content) .upbar{ transform:translateY(0);}
 
 
 
-
+      .font {
+        font-family: "Geologica", sans-serif;
+        font-optical-sizing: auto;
+        font-weight: 900;
+        font-style: normal;
+        font-variation-settings:
+          "slnt" 0,
+          "CRSV" 0,
+          "SHRP" 0;
+      }
 
 
       
