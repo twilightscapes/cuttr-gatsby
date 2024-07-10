@@ -469,17 +469,17 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-name: settings.meta.companyname,
-short_name: settings.meta.companyname,
-start_url: `${settings.meta.proOptions.startUrl}`,
-description: settings.meta.description,
-background_color: `hsl(133, 47%, 54%)`,
-lang: `en`,
-theme_color: `hsl(133, 47%, 54%)`,
-display: `standalone`,
-icon: `static/assets/Cuttr-icon.svg`, // path is relative to the root of the site.
-crossOrigin: `use-credentials`,
-theme_color_in_head: false,
+        name: settings.meta.companyname,
+        short_name: settings.meta.companyname,
+        start_url: `${settings.meta.proOptions.startUrl}`,
+        description: settings.meta.description,
+        background_color: `transparent`,
+        lang: `en`,
+        theme_color: `transparent`,
+        display: `standalone`,
+        icon: `static${settings.meta.icon512}`, // path is relative to the root of the site.
+        crossOrigin: `use-credentials`,
+        theme_color_in_head: false,
 icon_options: {
   purpose: `any maskable`,
 },
