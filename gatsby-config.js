@@ -473,9 +473,9 @@ module.exports = {
         short_name: settings.meta.companyname,
         start_url: `${settings.meta.proOptions.startUrl}`,
         description: settings.meta.description,
-        background_color: `transparent`,
+        background_color: `hsl(133, 47%, 54%)`,
         lang: `en`,
-        theme_color: `transparent`,
+        theme_color: `hsl(133, 47%, 54%)`,
         display: `standalone`,
         icon: `static${settings.meta.icon512}`, // path is relative to the root of the site.
         crossOrigin: `use-credentials`,
