@@ -39,7 +39,7 @@
       "ShowDisclaimer": false,
       "showLegal": true,
       "showConsent": false,
-      "startUrl": "/map",
+      "startUrl": "/beta",
       "showFeature": true,
       "showResume": false,
       "showLocation": false,
