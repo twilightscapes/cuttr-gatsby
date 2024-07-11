@@ -824,7 +824,7 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 
   <div className="flexbutt" style={{ padding: " 0", width:'100%', maxWidth: "100vw", margin: "0 auto", display: "", flexDirection: "", justifyContent: "", alignItems:'', gap:'2vw', }}>
 
-<div style={{ padding: "0 10px", width:'100vw',maxWidth: "100vw", margin: "0 auto", display: "", flexDirection: "", justifyContent: "", alignItems:'', gap:'0', }}>
+<div style={{ padding: "30px 10px", width:'100vw',maxWidth: "100vw", margin: "0 auto", display: "", flexDirection: "", justifyContent: "", alignItems:'', gap:'0', }}>
   
 {/* <div style={{ display: 'flex', justifyContent: 'center', position:'relative', alignItems:'center', padding:'4px 1rem 0 1rem', textDecoration:'none', width:'80%', borderRadius:'12px 12px 0 0', margin:'0 auto 0 auto', textAlign:'center', fontSize:'clamp(1rem, 1vw, 1.8rem)', background:'rgba(8, 44, 20, 0.9)',  backdropFilter: 'blur(4px)', border:'0px solid #333', color:'#fff' , gap:''}}>
 
@@ -845,7 +845,7 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
     
 </div>
 
-    <div className="flexcheek" style={{maxWidth:'100%', gap:'', paddingRight:''}}>
+    <div className="flexcheek" style={{maxWidth:'100%', gap:'', paddingRight:'10px'}}>
     
     {/* <StaticImage src="../../static/assets/measure-tool.png" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'relative', zIndex:'0', top:'0',border:'1px solid #222', borderRadius:'8px', objectFit:'contain', margin:'0 auto'}} /> */}
 
