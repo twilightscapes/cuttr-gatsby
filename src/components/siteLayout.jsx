@@ -254,14 +254,14 @@ const Layout = ({ children }) => {
   ""
 )}
 
-{/* {showNav2 ? (
+{showNav2 ? (
 <label id="menuicon" htmlFor="openSidebarMenu" className="sidebarIconToggle1  " style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex:'10000', marginTop: '5px', textAlign: 'center', color:'#fff', height:'', cursor:'pointer' }}>
           <BsLayoutSidebarInsetReverse style={{ height: '28px', width:'28px', color:'#ddd', filter:'drop-shadow(0px 1px 0px var(--theme-ui-colors-textShadow))' }} />
           <span className="themetext">Menu</span>
           </label>
 ) : (
 ""
-)} */}
+)}
 
 </div>
 

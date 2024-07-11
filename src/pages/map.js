@@ -18,7 +18,7 @@ const IndexPage = () => {
   return (
     <>
       <Helmet>
-        <body id="body" className="homepage1 install noscroll" style={{ overflow: 'hidden', paddingTop:'' }} />
+        <body id="body" className="homepage1 install noscroll map" style={{ overflow: 'hidden', paddingTop:'' }} />
   
       </Helmet>
       <Seo title="DogPoopers YardStick" />

@@ -1379,6 +1379,8 @@ iframe.beta{pointer-events:none;}
 }
 
 
+body.map #menuicon {display:none !important;}
+
 @media(display-mode:standalone) {
 #installer{border:10px solid #ff0}
 #installer,.no-app{display:none}

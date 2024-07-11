@@ -21,7 +21,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <Helmet>
-        <body id="body" className="homepage install noscroll" style={{ overflow: 'hidden', paddingTop:'' }} />
+        <body id="body" className="homepage install noscroll map" style={{ overflow: 'hidden', paddingTop:'' }} />
   
       </Helmet>
   
