@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby-plugin-modal-routing-4'
 import { TfiTarget } from "react-icons/tfi";
+import { GiButtonFinger } from "react-icons/gi";
 const Map = ({ location }) => {
   const mapRef = useRef(null);
   const searchRef = useRef(null);
@@ -219,13 +220,39 @@ const Map = ({ location }) => {
         />
 
         <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>
-        <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Target Yard</button>
+        <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 1px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow'}} /> Target Yard</button>
 
         <button className="button" style={{ padding: '.3vh 5px', fontSize: 'clamp(.7rem,1.2vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
 
 
 
-        <div className="faqblock" style={{width:'100%', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'', left:'0' }}>
+        <div className="faqblock" style={{width:'100%', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'200px', left:'0' }}>
+
+
+<input type="checkbox" id="help1" name="help1" className="questions" />
+
+<label htmlFor="help1" className=" font plus help" style={{ width:'24px', fontSize:'24px', display:'grid', placeContent:'center', color:'#fff', border:'1px solid', borderRadius:'50%', padding:'2px 15px', position:'', left:'0', top:'',}}>?</label>
+
+
+<div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
+<ul className="bullet panel" style={{padding:'4%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
+<li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click on the boundaries of your yard dropping points at each boundary</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Once you've connected the dots, it will show you the total footage of your yard</li>
+</ul>
+</div>
+</div>
+
+
+
+      </div>
+      
+
+
+
+
+      <div className="faqblock" style={{width:'100%', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'', left:'0' }}>
 
 
 <input type="checkbox" id="help" name="help" className="questions" />
@@ -245,8 +272,6 @@ const Map = ({ location }) => {
 
 
 
-      </div>
-      
 
       
       <div style={{ position: 'absolute', top: '120px', right: '5px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
@@ -256,8 +281,8 @@ const Map = ({ location }) => {
 
 
       <Link to='/contact' state={{modal: true}} className="print"  style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center', opacity:'', zIndex:'999'}}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 1vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.1rem,2.5vw,3.2rem)', fontWeight:'900', width:'',animationDuration:'1sec', animation:'', animationDelay:'3sec',  }}>
-      <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Cut My Grass From Space
+      <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 2vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.99', zIndex: '10', color:'#222', fontSize: 'clamp(1.1rem,2.5vw,3.2rem)', fontWeight:'900', width:'',animationDuration:'1sec', animation:'', animationDelay:'3sec',  }}>
+      <GiButtonFinger style={{fontSize:'64px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow' }} /> Cut My Grass From Space
       </div>
       </Link>
     
