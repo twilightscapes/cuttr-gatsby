@@ -194,7 +194,7 @@ const Map = ({ location }) => {
       <div className="virtualtour" ref={mapRef} style={{ width: '100%', height: '100dvh', position: 'relative' }}></div>
 
 
-      <div style={{ position: 'absolute', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', margin:'0 auto', padding:'0 0 4px 0' }}>
+      <div style={{ position: 'absolute', zIndex:'99999', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', margin:'0 auto', padding:'0 0 4px 0' }}>
 
 
 
@@ -235,10 +235,10 @@ const Map = ({ location }) => {
 
 <div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
 <ul className="bullet panel" style={{padding:'2%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
-<li style={{ display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Locate your property on the map and zoom in to 100%</li>
-<li style={{display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Click the 'Target Yard' button</li>
-<li style={{display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Click on the boundaries of your yard dropping points at each boundary</li>
-<li style={{display:'flex', alignItems:'center', gap:'5px'}}><span style={{fontSize:'2rem'}}>💩</span> Once you've connected the dots, it will show you the total footage of your yard</li>
+<li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click on the boundaries of your yard dropping points at each boundary</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Once you've connected the dots, it will show you the total footage of your yard</li>
 </ul>
 </div>
 </div>
