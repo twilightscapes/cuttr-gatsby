@@ -60,7 +60,8 @@ return (
 
 
 
-<div className="signup" >
+<div className="signup1" >
+  <br />
 <form
   className={`contact-form flexcheek1 ${submitted ? "submitted" : ""}`}
   // action="/install2"
@@ -70,8 +71,8 @@ return (
   data-netlify-honeypot="bot-field"
   encType="multipart/form-data"
   onSubmit={handleSubmit}
-  style={{width:'100%', minWidth:'300px', maxWidth:'400px', margin:'0 auto 0 auto', display:'flex', flexDirection:'column', justifyContent:'center', background: 'var(--theme-ui-colors-headerColor)',
-  backdropFilter: 'blur(44px)', borderRadius:'var(--theme-ui-colors-borderRadius)', textAlign:'center', alignSelf:'center', overflow:'hidden', color:'var(--theme-ui-colors-headerColorText)', border:'0px solid red'}}
+  style={{width:'100%', minWidth:'300px', maxWidth:'400px', margin:'0 auto 0 auto', display:'flex', flexDirection:'column', justifyContent:'center', background: 'rgba(0,0,0,0.50)',
+ borderRadius:'var(--theme-ui-colors-borderRadius)', textAlign:'center', alignSelf:'center', overflow:'hidden', color:'var(--theme-ui-colors-headerColorText)', border:'0px solid red'}}
 >
 
 

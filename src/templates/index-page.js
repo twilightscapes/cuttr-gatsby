@@ -28,6 +28,7 @@ import { AiOutlineAudioMuted, AiOutlineGift } from 'react-icons/ai';
 import { StaticImage } from "gatsby-plugin-image"
 // import Faqs from "../components/services"
 // import NoDogs from "../components/panels"
+import NewSign from "../components/newssign"
 
 
 
@@ -839,7 +840,7 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 
 </div> */}
 
-    <iframe title="location map" className=" flexcheek" width="100%" height="500" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="/map" allowFullScreen={true} loading="lazy" origin="https://dogpoopers.com" style={{maxWidth:'100%', minWidth:'100%', minHeight:'60vh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
+    <iframe title="location map" className="flexcheek beta" width="100%" height="500" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="/beta" allowFullScreen={true} loading="lazy" origin="https://cuttr.app" style={{maxWidth:'100%', minWidth:'100%', minHeight:'60vh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
     
     
 </div>
@@ -850,10 +851,10 @@ style={{height:'auto', width:'100dvw', maxHeight:'100dvh', position:'relative', 
 
     <div style={{ display: 'flex', justifyContent: 'center', alignItems:'center', padding:'1vh 1vw', textDecoration:'none', width:'95%', borderRadius:'12px', margin:'50px auto 0 auto', textAlign:'center', fontSize:'clamp(1.5rem, 2vw, 1.8rem)', background: 'rgba(8, 44, 20, 0.9)',  backdropFilter: 'blur(4px)', border:'1px solid #333', color:'#fff' }}>
 
-  Size Your Yard<br /></div>
+  Beta Begins Soon!<br /></div>
 
 
-
+  <NewSign />
 
 
      <ul className="bullet" style={{padding:'2%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)'}} >

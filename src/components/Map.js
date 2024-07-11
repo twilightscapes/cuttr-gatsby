@@ -203,14 +203,14 @@ const Map = ({ location }) => {
 
 
 
-      {/* <Link to="/" aria-label="Link to Top" title="Back to Top" style={{textDecoration:'none', borderBottom:'0'}}> */}
+      <Link to="/" aria-label="Link to Top" title="Back to Top" style={{textDecoration:'none', borderBottom:'0'}}>
         <StaticImage
           className="logo1"
           src="../../static/assets/Cuttr-logo-wht.svg"
           alt="Default Image"
           style={{ height: 'auto', maxWidth: '130px', position: '', top: '', left: '', zIndex: 1, borderRadius: '2%', opacity: '0.9', background: 'transparent', margin: '0 2vw 0 2vw', opacity:'.8', }}
         />
-        {/* </Link> */}
+        </Link>
 
         <input
           ref={searchRef}
@@ -230,15 +230,15 @@ const Map = ({ location }) => {
 
 
 
-      <div className="faqblock block2" style={{width:'100vw', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'', left:'0' }}>
+<div className="faqblock block2" style={{width:'100vw', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'35px', left:'0' }}>
 
 
 <input type="checkbox" id="help" name="help" className="questions" />
 
-<label htmlFor="help" className=" font plus help" style={{ width:'', fontSize:'54px', display:'grid', placeContent:'center', color:'#fff', position:'', left:'0', top:'',}}><LuHelpCircle style={{ filter:'drop-shadow(2px 2px 3px #000)'}} /></label>
+<label htmlFor="help" className=" font plus help" style={{ width:'', fontSize:'44px', display:'grid', placeContent:'center', color:'#fff', position:'', left:'0', top:'',}}><LuHelpCircle style={{ filter:'drop-shadow(2px 2px 3px #000)'}} /></label>
 
 
-<div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
+<div className="answers" style={{marginTop:'120px', position:'absolute', zIndex:'1'}}>
 <ul className="bullet panel" style={{padding:'35px', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
 <li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
 <li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
@@ -251,15 +251,15 @@ const Map = ({ location }) => {
 
 
 
-<div className="faqblock" style={{width:'100vw', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'200px', right:'0' }}>
+<div className="faqblock" style={{width:'100vw', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'35px', right:'0' }}>
 
 
 <input type="checkbox" id="help1" name="help1" className="questions" />
 
-<label htmlFor="help1" className=" font plus help" style={{ width:'', fontSize:'54px', display:'grid', placeContent:'center', color:'#fff', position:'', right:'0', top:'',}}><RiSettings5Fill style={{ filter:'drop-shadow(2px 2px 3px #000)'}} /></label>
+<label htmlFor="help1" className=" font plus help" style={{ width:'', fontSize:'44px', display:'grid', placeContent:'center', color:'#fff', position:'', right:'0', top:'',}}><RiSettings5Fill style={{ filter:'drop-shadow(2px 2px 3px #000)'}} /></label>
 
 
-<div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
+<div className="answers" style={{marginTop:'120px', position:'absolute', zIndex:'1'}}>
 <ul className="bullet panel" style={{padding:'35px', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
 <li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
 <li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
@@ -281,7 +281,7 @@ const Map = ({ location }) => {
 
 
       
-      <div style={{ position: 'absolute', top: '120px', right: '5px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
+      <div style={{ position: 'absolute', top: '30vh', right: '5px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
         <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
         <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert</label>
       </div>
@@ -289,7 +289,7 @@ const Map = ({ location }) => {
 
       <Link to='/contact' state={{modal: true}} className="print"  style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center', opacity:'', zIndex:'999'}}>
       <div className="button glow font" style={{filter:'drop-shadow(2px 2px 3px #000)', position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 2vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.99', zIndex: '10', color:'#222', fontSize: 'clamp(1.1rem,2.5vw,3.2rem)', fontWeight:'900', width:'',animationDuration:'1sec', animation:'', animationDelay:'3sec',  }}>
-      <GiButtonFinger style={{fontSize:'64px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow' }} /> Cut My Grass From Space
+      <GiButtonFinger style={{fontSize:'64px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow' }} /> Cut My Grass<br /> From Space
       </div>
       </Link>
     
