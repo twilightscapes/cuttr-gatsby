@@ -195,7 +195,7 @@ const Map = ({ location }) => {
       <div className="virtualtour" ref={mapRef} style={{ width: '100%', height: '100dvh', position: 'relative' }}></div>
 
 
-      <div style={{ position: 'absolute', zIndex:'99999', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', margin:'0 auto', padding:'0 0 4px 0' }}>
+      <div style={{ position: 'absolute', zIndex:'99999', top: '0', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', background:'rgba(0,0,0,0.50)', maxWidth:'', gap:'2vw', margin:'0 auto', padding:'0 0 4px 0' }}>
 
 
 
@@ -213,13 +213,14 @@ const Map = ({ location }) => {
         <input
           ref={searchRef}
           type="text"
+          className="places"
           placeholder="Enter your address"
           style={{ width: '80%', maxWidth: '300px', marginTop:'', padding: '5px', borderRadius: '3px', border: '1px solid #ccc', color: '#222', opacity:'.8' }}
           value={searchQuery}
           onChange={handleSearchChange}
         />
 
-        <button className="button font" style={{ padding: '1vh 2vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)' }} onClick={handleMeasureStart}>
+        <button className="button font" style={{ padding: '.5vh 1vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)', filter:'drop-shadow(2px 2px 3px #000)' }} onClick={handleMeasureStart}>
         <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 1px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow'}} /> Target Yard</button>
 
         <button className="button" style={{ padding: '.3vh 5px', fontSize: 'clamp(.7rem,1.2vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
@@ -281,7 +282,7 @@ const Map = ({ location }) => {
 
 
       <Link to='/contact' state={{modal: true}} className="print"  style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center', opacity:'', zIndex:'999'}}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 2vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.99', zIndex: '10', color:'#222', fontSize: 'clamp(1.1rem,2.5vw,3.2rem)', fontWeight:'900', width:'',animationDuration:'1sec', animation:'', animationDelay:'3sec',  }}>
+      <div className="button glow font" style={{filter:'drop-shadow(2px 2px 3px #000)', position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 2vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.99', zIndex: '10', color:'#222', fontSize: 'clamp(1.1rem,2.5vw,3.2rem)', fontWeight:'900', width:'',animationDuration:'1sec', animation:'', animationDelay:'3sec',  }}>
       <GiButtonFinger style={{fontSize:'64px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow' }} /> Cut My Grass From Space
       </div>
       </Link>
