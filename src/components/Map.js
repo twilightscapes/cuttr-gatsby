@@ -3,6 +3,8 @@ import { StaticImage } from 'gatsby-plugin-image';
 import { Link } from 'gatsby-plugin-modal-routing-4'
 import { TfiTarget } from "react-icons/tfi";
 import { GiButtonFinger } from "react-icons/gi";
+import { LuHelpCircle } from "react-icons/lu";
+import { RiSettings5Fill } from "react-icons/ri";
 const Map = ({ location }) => {
   const mapRef = useRef(null);
   const searchRef = useRef(null);
@@ -221,22 +223,23 @@ const Map = ({ location }) => {
         />
 
         <button className="button font" style={{ padding: '.5vh 1vw', fontSize: 'clamp(.7rem,1.8vw,2.2rem)', filter:'drop-shadow(2px 2px 3px #000)' }} onClick={handleMeasureStart}>
-        <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 1px #000)', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow'}} /> Target Yard</button>
+        <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'drop-shadow(2px 2px 3px #000)', color:'yellow'}} /> Target Yard</button>
 
         <button className="button" style={{ padding: '.3vh 5px', fontSize: 'clamp(.7rem,1.2vw,2.2rem)', background: '#222', color: '#fff', border: '1px solid #999' }} onClick={handleMeasureEnd}>Clear</button>
 
 
 
-        <div className="faqblock" style={{width:'100%', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'200px', left:'0' }}>
+
+      <div className="faqblock block2" style={{width:'100vw', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'', left:'0' }}>
 
 
-<input type="checkbox" id="help1" name="help1" className="questions" />
+<input type="checkbox" id="help" name="help" className="questions" />
 
-<label htmlFor="help1" className=" font plus help" style={{ width:'24px', fontSize:'24px', display:'grid', placeContent:'center', color:'#fff', border:'1px solid', borderRadius:'50%', padding:'2px 15px', position:'', left:'0', top:'',}}>?</label>
+<label htmlFor="help" className=" font plus help" style={{ width:'', fontSize:'54px', display:'grid', placeContent:'center', color:'#fff', position:'', left:'0', top:'',}}><LuHelpCircle style={{ filter:'drop-shadow(2px 2px 3px #000)'}} /></label>
 
 
 <div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
-<ul className="bullet panel" style={{padding:'4%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
+<ul className="bullet panel" style={{padding:'35px', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
 <li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
 <li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
 <li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click on the boundaries of your yard dropping points at each boundary</li>
@@ -245,6 +248,26 @@ const Map = ({ location }) => {
 </div>
 </div>
 
+
+
+
+<div className="faqblock" style={{width:'100vw', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'200px', right:'0' }}>
+
+
+<input type="checkbox" id="help1" name="help1" className="questions" />
+
+<label htmlFor="help1" className=" font plus help" style={{ width:'', fontSize:'54px', display:'grid', placeContent:'center', color:'#fff', position:'', right:'0', top:'',}}><RiSettings5Fill style={{ filter:'drop-shadow(2px 2px 3px #000)'}} /></label>
+
+
+<div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
+<ul className="bullet panel" style={{padding:'35px', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
+<li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click on the boundaries of your yard dropping points at each boundary</li>
+<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Once you've connected the dots, it will show you the total footage of your yard</li>
+</ul>
+</div>
+</div>
 
 
       </div>
@@ -253,23 +276,6 @@ const Map = ({ location }) => {
 
 
 
-      <div className="faqblock" style={{width:'100%', maxWidth:'800px', display:'grid', placeContent:'center', margin:'0 auto', position:'absolute', top:'', left:'0' }}>
-
-
-<input type="checkbox" id="help" name="help" className="questions" />
-
-<label htmlFor="help" className=" font plus help" style={{ width:'24px', fontSize:'24px', display:'grid', placeContent:'center', color:'#fff', border:'1px solid', borderRadius:'50%', padding:'2px 15px', position:'', left:'0', top:'',}}>?</label>
-
-
-<div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
-<ul className="bullet panel" style={{padding:'4%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
-<li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
-<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
-<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click on the boundaries of your yard dropping points at each boundary</li>
-<li style={{display:'flex', alignItems:'center', gap:'5px'}}>Once you've connected the dots, it will show you the total footage of your yard</li>
-</ul>
-</div>
-</div>
 
 
 
