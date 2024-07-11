@@ -234,7 +234,7 @@ const Map = ({ location }) => {
 
 
 <div className="answers" style={{marginTop:'50px', position:'absolute', zIndex:'1'}}>
-<ul className="bullet panel" style={{padding:'2%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
+<ul className="bullet panel" style={{padding:'4%', fontSize:'clamp(1rem, 1.4vw, 1.8rem)', color:'#fff', background:'rgba(0, 0, 0, 0.8)', borderRadius:'10px'}} >
 <li style={{ display:'flex', alignItems:'center', gap:'5px'}}>Locate your property on the map and zoom in to 100%</li>
 <li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click the 'Target Yard' button</li>
 <li style={{display:'flex', alignItems:'center', gap:'5px'}}>Click on the boundaries of your yard dropping points at each boundary</li>
@@ -249,14 +249,14 @@ const Map = ({ location }) => {
       
 
       
-      <div style={{ position: 'absolute', top: '15vh', left: '55px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
+      <div style={{ position: 'absolute', top: '120px', right: '5px', background: '#fff', padding: '4px 5px', display:'flex', alignItems:'center', borderRadius: '3px', opacity: '.8', zIndex: '0', color:'#222', fontSize: 'clamp(.7rem,1vw,2.2rem)' }}>
         <input type="checkbox" id="invertColor" checked={inverted} onChange={handleInvert} />
         <label htmlFor="invertColor" style={{ marginLeft: '5px' }}>Invert</label>
       </div>
 
 
-      <Link to='/contact' state={{modal: true}} className="print hover" style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center'}}>
-      <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 1vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.3rem,2.5vw,3.2rem)', fontWeight:'900', width:'' }}>
+      <Link to='/contact' state={{modal: true}} className="print"  style={{display:'flex', placeContent:'center', width:'100vw', justifyContent:'center', opacity:'', zIndex:'999'}}>
+      <div className="button glow font" style={{ position: 'absolute', bottom: '4vh', left:'', right: '', background: '', padding: '1vh 1vw', display:'flex', alignItems:'center', borderRadius: '10px', opacity: '.9', zIndex: '10', color:'#222', fontSize: 'clamp(1.1rem,2.5vw,3.2rem)', fontWeight:'900', width:'',animationDuration:'1sec', animation:'', animationDelay:'3sec',  }}>
       <TfiTarget style={{fontSize:'34px', marginRight:'4px', filter:'dropShadow(2px 2px 3px #000)'}} /> Cut My Grass From Space
       </div>
       </Link>
