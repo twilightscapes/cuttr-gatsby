@@ -506,7 +506,7 @@ display:'flex', justifyContent:'center', maxHeight:'80px !important', height:'15
   return (
     <Layout>
       <Helmet>
-        <body id="body" className="homepage intro install" />
+        <body id="body" className="homepage1 intro install" />
       </Helmet>
 
       {/* <Seo
