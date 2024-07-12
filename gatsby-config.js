@@ -469,8 +469,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: settings.meta.companyname,
-        short_name: settings.meta.companyname,
+        name: 'Lawn Share',
+        short_name: 'Lawn Share',
         start_url: `${settings.meta.proOptions.startUrl}`,
         description: settings.meta.description,
         background_color: `hsl(133, 47%, 54%)`,
