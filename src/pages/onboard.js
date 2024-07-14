@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import netlifyIdentity from 'netlify-identity-widget';
 import Seo from '../components/seo';
 import Layout from '../components/siteLayout';
@@ -6,114 +6,86 @@ import { Helmet } from 'react-helmet';
 import { StaticImage } from 'gatsby-plugin-image';
 
 const OnBoard = () => {
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     netlifyIdentity.init();
 
-    const button1 = document.getElementById('left');
-    const button2 = document.getElementById('right');
-
-    const login = () => netlifyIdentity.open('login');
-    const signup = () => netlifyIdentity.open('signup');
-
-    button1.addEventListener('click', login);
-    button2.addEventListener('click', signup);
-
-    const updateUserInfo = (user) => {
-      const container = document.querySelector('.user-info');
-
-      const b1 = button1.cloneNode(true);
-      const b2 = button2.cloneNode(true);
-
-      container.innerHTML = '';
-
-      if (user) {
-        b1.innerText = 'Log Out';
-        b1.addEventListener('click', () => {
-          netlifyIdentity.logout();
-        });
-
-        b2.innerText = 'Manage Subscription';
-        b2.addEventListener('click', () => {
-          fetch('/.netlify/functions/create-manage-link', {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${user.token.access_token}`,
-            },
-          })
-            .then((res) => res.json())
-            .then((link) => {
-              window.location.href = link;
-            })
-            .catch((err) => console.error(err));
-        });
-      } else {
-        b1.innerText = 'Log In';
-        b1.addEventListener('click', login);
-
-        b2.innerText = 'Sign Up';
-        b2.addEventListener('click', signup);
-      }
-
-      container.appendChild(b1);
-      container.appendChild(b2);
-    };
-
-    const loadSubscriptionContent = async (user) => {
-      const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
-
-      ['free', 'pro', 'premium'].forEach((type) => {
-        fetch('/.netlify/functions/get-protected-content', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ type }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const template = document.querySelector('#content');
-            const container = document.querySelector(`.${type}`);
-
-            const oldContent = container.querySelector('.content-display');
-            if (oldContent) {
-              container.removeChild(oldContent);
-            }
-
-            const content = template.content.cloneNode(true);
-
-            const img = content.querySelector('img');
-            img.src = data.src;
-            img.alt = data.alt;
-
-            const credit = content.querySelector('.credit');
-            credit.href = data.creditLink;
-            credit.innerText = `Credit: ${data.credit}`;
-
-            const caption = content.querySelector('figcaption');
-            caption.innerText = data.message;
-            caption.appendChild(credit);
-
-            container.appendChild(content);
-          });
-      });
-    };
-
     const handleUserStateChange = (user) => {
-      updateUserInfo(user);
-      loadSubscriptionContent(user);
+      setUser(user);
+      if (user) {
+        loadSubscriptionContent(user);
+      }
     };
 
-    netlifyIdentity.on('init', handleUserStateChange);
     netlifyIdentity.on('login', handleUserStateChange);
     netlifyIdentity.on('logout', handleUserStateChange);
+    netlifyIdentity.on('init', handleUserStateChange);
 
     return () => {
-      netlifyIdentity.off('init', handleUserStateChange);
       netlifyIdentity.off('login', handleUserStateChange);
       netlifyIdentity.off('logout', handleUserStateChange);
+      netlifyIdentity.off('init', handleUserStateChange);
     };
   }, []);
+
+  const login = () => {
+    netlifyIdentity.open('login');
+  };
+
+  const signup = () => {
+    netlifyIdentity.open('signup');
+  };
+
+  const logout = () => {
+    netlifyIdentity.logout();
+  };
+
+  const loadSubscriptionContent = (user) => {
+    ['free', 'pro', 'premium'].forEach((type) => {
+      fetch('/.netlify/functions/get-protected-content', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${user.token.access_token}`,
+        },
+        body: JSON.stringify({ type }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // Handle content update using React state
+          updateContent(type, data);
+        })
+        .catch((err) => console.error(err));
+    });
+  };
+
+  const updateContent = (type, data) => {
+    // Update state to trigger re-render with new content
+    setContents((prevContents) => ({
+      ...prevContents,
+      [type]: data,
+    }));
+  };
+
+  const renderContent = (type) => {
+    const content = contents[type];
+    if (!content) return null;
+
+    return (
+      <div className={`${type}`}>
+        <h3>{type.charAt(0).toUpperCase() + type.slice(1)} Content</h3>
+        <img src={content.src} alt={content.alt} />
+        <p>{content.message}</p>
+        <a href={content.creditLink}>Credit: {content.credit}</a>
+      </div>
+    );
+  };
+
+  const [contents, setContents] = useState({
+    free: null,
+    pro: null,
+    premium: null,
+  });
 
   return (
     <>
@@ -135,33 +107,31 @@ const OnBoard = () => {
             <h1>Sign Up for Premium Corgi Content</h1>
 
             <div className="user-info">
-              <button id="left">Log In</button>
-              <button id="right">Sign Up</button>
+              {user ? (
+                <>
+                  <button id="left" onClick={logout}>Log Out</button>
+                  {/* <button id="right" onClick={manageSubscription}>Manage Subscription</button> */}
+                  
+                </>
+              ) : (
+                <>
+                  <button id="left" onClick={login}>Log In</button>
+                  <button id="right" onClick={signup}>Sign Up</button>
+                </>
+              )}
             </div>
 
             <div className="corgi-content">
               <div className="content">
-                <h2>Free Content</h2>
-                <div className="free"></div>
+                {renderContent('free')}
               </div>
               <div className="content">
-                <h2>Pro Content</h2>
-                <div className="pro"></div>
+                {renderContent('pro')}
               </div>
               <div className="content">
-                <h2>Premium Content</h2>
-                <div className="premium"></div>
+                {renderContent('premium')}
               </div>
             </div>
-
-            <template id="content">
-              <figure className="content-display">
-                <img />
-                <figcaption>
-                  <a className="credit"></a>
-                </figcaption>
-              </figure>
-            </template>
 
             <div className="spacer33" style={{ display: 'block', height: '' }} />
           </div>
