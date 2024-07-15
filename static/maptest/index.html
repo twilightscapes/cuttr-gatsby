@@ -8,20 +8,23 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">
     <style>
-        body { padding: 0; margin: 0; overflow: hidden; }
+        body { padding: 0; margin: 0; overflow: hidden; max-width: 100dvw; max-height: 100dvh; }
         #map { height: 100vh; z-index: 1; }
         #area {
             position: fixed;
-            background: white;
             padding: 5px;
             bottom: 15vh;
-            left: 40%;
-            right: 40%;
+            left: 0;
+            right: 0;
             z-index: 9999;
             width: 100%;
-            max-width: 20vw;
+            max-width: 400px;
             margin: 0 auto;
             text-align: center;
+            background: rgba(0,0,0,0.7);
+            color:#fff;
+            font-size: clamp(1.6rem,2.5vw,3rem);
+            border-radius: 10px;
         }
         .leaflet-draw-toolbar {
             background-color: white;
@@ -84,19 +87,28 @@
             z-index: 10000;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
         }
+        input {font-size: 16px !important;
+            background: rgba(0,0,0,0.9);
+
+            padding:1vh 1vw;
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <input type="text" id="address" placeholder="Enter an address">
+    <input type="text" id="address" placeholder="Enter an address" style="color:#222;">
     <div id="area">Total Area: 0 sq ft<br>Cost per sq ft: $0.00<br>Cost: $0.00</div>
     <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
     
     <!-- Netlify form -->
-    <form name="map-form" method="POST" data-netlify="true" style="position: fixed; bottom: 10px; right: 10px; background: white; padding: 10px; z-index: 10000;">
+    <form name="map-form" method="POST" data-netlify="true" style="position: fixed; bottom: 10px; right: 10px; text-align: center;
+    background: rgba(0,0,0,0.7);
+    color:#fff;
+    font-size: clamp(1.6rem,2.5vw,3rem);
+    border-radius: 10px; padding: 10px; z-index: 10000;">
         <input type="hidden" name="form-name" value="map-form">
-        <input type="text" id="name" name="name" placeholder="Name" required>
-        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="text" id="name" name="name" placeholder="Name" style="color:#fff; border-radius:3px; border:none;" required>
+        <input type="email" id="email" name="email" placeholder="Email" style="color:#fff; border-radius:3px; border:none;" required>
         <input type="hidden" id="query" name="query">
         <input type="hidden" id="cost" name="cost">
         <button type="submit">Submit</button>
