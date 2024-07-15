@@ -1,4 +1,4 @@
-npx pwa-asset-generator ./static/assets/Cuttr-logo.svg ./static/siteimages --background "linear-gradient(180deg, hsl(125, 83%, 37%) 1%, hsl(125, 68%, 31%) 80%)" --scrape false --xhtml true --opaque false
+npx pwa-asset-generator ./static/assets/dogpooper-splash.svg ./static/siteimages --background "linear-gradient(180deg, hsl(125, 83%, 37%) 1%, hsl(125, 68%, 31%) 80%)" --scrape false --xhtml true --opaque false
 
 
 npx pwa-asset-generator ./src/img/logo.svg ./static/siteimages --background "linear-gradient(180deg, #43186b 1%, #9851c476 80%)" --scrape false --xhtml true --opaque false
