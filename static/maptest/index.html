@@ -78,15 +78,13 @@
             text-decoration: none;
             /* border-radius: 3px; */
             cursor: pointer;
+
+            align-items: center;
         }
 
         .leaflet-control-geocoder .leaflet-control-geocoder-icon{
-
-    
             text-align: center;
-            background-color: #3388ff;
-            color: white;
-            padding: 8px 10px;
+            padding: 24px 24px;
             text-decoration: none;
             border-radius: 3px;
             cursor: pointer;
@@ -94,24 +92,15 @@
         
 
         .logo {
-      /* position: absolute;
-      top: 0; */
       display: flex;
       justify-content: center;
       width: 100%;
       margin:0 auto;
-      /* height: 100vh;
-      place-content: center;
-      border: 0px solid red;
-      margin: 0 auto;
-      z-index: 10000; */
     }
     .logo img {
-    
       opacity: .4;
       position: absolute;
       bottom: 20px;
-      /* right: 45px; */
       z-index: 9999;
       width:100%;
       max-width: 20vw;
@@ -131,7 +120,7 @@
     <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
     <script>
         var map = L.map('map', {
-            zoomControl: false // Disable zoom control buttons
+            zoomControl: false 
         }).setView([30.38, -89.03], 10);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
@@ -194,7 +183,8 @@
             if (address) {
                 params.set('address', encodeURIComponent(address));
             } else {
-                params.delete('address'); // Remove 'address' parameter if empty
+                ''
+                // params.delete('address'); 
             }
             
             var newUrl = window.location.pathname + '?' + params.toString();
