@@ -83,11 +83,12 @@
     <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
     
     <!-- Netlify form -->
-    <form name="map-form" method="POST" data-netlify="true" action="/thanks" style="position: fixed; bottom: 10px; right: 10px; background: white; padding: 10px; z-index: 10000;">
+    <form name="map-form" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thanks" style="position: fixed; bottom: 10px; right: 10px; background: white; padding: 10px; z-index: 10000;">
         <input type="hidden" name="form-name" value="map-form">
         <input type="text" id="name" name="name" placeholder="Name" required>
         <input type="email" id="email" name="email" placeholder="Email" required>
         <input type="hidden" id="query" name="query">
+        <input type="hidden" name="form-name" value="contact" />
         <button type="submit">Submit</button>
     </form>
 
