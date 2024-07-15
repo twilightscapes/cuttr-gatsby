@@ -369,13 +369,13 @@ module.exports = {
     // `gatsby-plugin-static-cms`,
     // `gatsby-plugin-decap-cms`,
 
-    // {
-    //   resolve: `gatsby-plugin-netlify-identity`,
-    //   options: {
-    //     // url: `${settings.meta.siteUrl}`,
-    //     url: `https://pirateplus.netlify.app/`
-    //   }
-    // },
+    {
+      resolve: `gatsby-plugin-netlify-identity`,
+      options: {
+        // url: `${settings.meta.siteUrl}`,
+        url: `https://cuttr.app/`
+      }
+    },
 
     {
       resolve: `gatsby-plugin-decap-cms`,
