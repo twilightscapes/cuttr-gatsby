@@ -69,7 +69,7 @@ const IndexPage = () => {
     
           {/* <Map location={location} onMapUpdate={handleMapUpdate} /> */}
 
-          <iframe title="location map" className="flexcheek beta" width="100%" height="500" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="/maptest/" allowFullScreen={true} loading="lazy" origin="https://cuttr.app" style={{maxWidth:'100%', minWidth:'100%', minHeight:'60vh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
+          <iframe title="location map" className="flexcheek" width="100vw" height="100dvh" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="/maptest/" allowFullScreen={true} loading="lazy" origin="https://cuttr.app" style={{maxWidth:'100%', minWidth:'100%', minHeight:'60vh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
 
 
         </div>
