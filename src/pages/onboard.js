@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet';
 import { StaticImage } from 'gatsby-plugin-image';
 
 const OnBoard = () => {
-
   useEffect(() => {
     netlifyIdentity.init();
 
@@ -118,7 +117,158 @@ const OnBoard = () => {
   return (
     <Layout className="thanks-page">
       <Helmet>
-        <body id="body" className="homepage1" />
+        <style>{`
+          h1 {
+            text-align: center;
+          }
+
+          .user-info {
+            align-items: center;
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(2, 1fr);
+            list-style: none;
+            padding: 0;
+          }
+
+          .user-info button {
+            background: var(--dark-gray);
+            border: 0;
+            border-radius: 0.5rem;
+            color: var(--white);
+            display: block;
+            font-family: var(--font-family);
+            font-size: 1.5rem;
+            font-weight: 900;
+            padding: 1rem;
+            text-align: center;
+            text-decoration: none;
+          }
+
+          .corgi-content {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          .content h2 {
+            font-size: 1.25rem;
+            text-align: center;
+          }
+
+          .content-display {
+            margin: 0;
+          }
+
+          .credit {
+            display: block;
+            font-size: 0.75rem;
+          }
+
+          .content img {
+            width: 100%;
+          }
+        `}</style>
+        <script src="https://identity.netlify.com/v1/netlify-identity-widget.js" />
+        <script>{`
+          const button1 = document.getElementById('left');
+          const button2 = document.getElementById('right');
+
+          const login = () => netlifyIdentity.open('login');
+          const signup = () => netlifyIdentity.open('signup');
+
+          button1.addEventListener('click', login);
+          button2.addEventListener('click', signup);
+
+          const updateUserInfo = (user) => {
+            const container = document.querySelector('.user-info');
+
+            const b1 = button1.cloneNode(true);
+            const b2 = button2.cloneNode(true);
+
+            container.innerHTML = '';
+
+            if (user) {
+              b1.innerText = 'Log Out';
+              b1.addEventListener('click', () => {
+                netlifyIdentity.logout();
+              });
+
+              b2.innerText = 'Manage Subscription';
+              b2.addEventListener('click', () => {
+                fetch('/.netlify/functions/create-manage-link', {
+                  method: 'POST',
+                  headers: {
+                    Authorization: \`Bearer \${user.token.access_token}\`,
+                  },
+                })
+                  .then((res) => res.json())
+                  .then((link) => {
+                    window.location.href = link;
+                  })
+                  .catch((err) => console.error(err));
+              });
+            } else {
+              b1.innerText = 'Log In';
+              b1.addEventListener('click', login);
+
+              b2.innerText = 'Sign Up';
+              b2.addEventListener('click', signup);
+            }
+
+            container.appendChild(b1);
+            container.appendChild(b2);
+          };
+
+          const loadSubscriptionContent = async (user) => {
+            const token = user ? await netlifyIdentity.currentUser().jwt(true) : false;
+
+            ['free', 'pro', 'premium'].forEach((type) => {
+              fetch('/.netlify/functions/get-protected-content', {
+                method: 'POST',
+                headers: {
+                  Authorization: \`Bearer \${token}\`,
+                },
+                body: JSON.stringify({ type }),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  const template = document.querySelector('#content');
+                  const container = document.querySelector(\`.\${type}\`);
+
+                  const oldContent = container.querySelector('.content-display');
+                  if (oldContent) {
+                    container.removeChild(oldContent);
+                  }
+
+                  const content = template.content.cloneNode(true);
+
+                  const img = content.querySelector('img');
+                  img.src = data.src;
+                  img.alt = data.alt;
+
+                  const credit = content.querySelector('.credit');
+                  credit.href = data.creditLink;
+                  credit.innerText = \`Credit: \${data.credit}\`;
+
+                  const caption = content.querySelector('figcaption');
+                  caption.innerText = data.message;
+                  caption.appendChild(credit);
+
+                  container.appendChild(content);
+                });
+            });
+          };
+
+          const handleUserStateChange = (user) => {
+            updateUserInfo(user);
+            loadSubscriptionContent(user);
+          };
+
+          netlifyIdentity.on('init', handleUserStateChange);
+          netlifyIdentity.on('login', handleUserStateChange);
+          netlifyIdentity.on('logout', handleUserStateChange);
+        `}</script>
       </Helmet>
 
       <Seo title={`Dog Poopers`} />
@@ -162,8 +312,6 @@ const OnBoard = () => {
                 </figcaption>
               </figure>
             </template>
-
-            <div className="spacer33" style={{ display: 'block', height: '' }} />
           </div>
         </div>
       </section>
