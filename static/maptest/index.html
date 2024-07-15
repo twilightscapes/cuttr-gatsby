@@ -129,7 +129,7 @@
 
         // Add Mapbox satellite tiles
         L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
-            maxZoom: 22,
+            maxZoom: 21,
             tileSize: 512,
             zoomOffset: -1,
         }).addTo(map);
@@ -141,7 +141,7 @@
         // Customize the draw control toolbar
         var drawControl = new L.Control.Draw({
             draw: {
-                polyline: true,
+                polyline: false,
                 polygon: true, // Enable polygon tool
                 rectangle: false, // Hide rectangle tool
                 circle: false,
