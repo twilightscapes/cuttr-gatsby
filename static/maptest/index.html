@@ -69,24 +69,11 @@
             max-width: 20vw;
             margin: 0 auto;
         }
-
-
         .leaflet-draw-draw-polygon {
             background:transparent !important;
             background-image: url('https://cuttr.app/assets/Cuttr-icon.png') !important; 
             background-size: contain !important;
-            /* background-repeat: no-repeat !important; */
-            /* border:1px solid red;
-        
-            content:' POOP ';
-            position:absolute;
-            top:0; */
         }
-
-        /* .leaflet-draw-toolbar{background:transparent !important; padding:20px !important; border: none !important;} */
-
-
-        
     </style>
 </head>
 <body>
@@ -94,6 +81,16 @@
     <div id="area">Yard Size: 0 sq ft</div>
     <input type="text" id="address" placeholder="Enter an address">
     <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
+    
+    <!-- Netlify form -->
+    <form name="map-form" method="POST" data-netlify="true" action="/thanks" style="position: fixed; bottom: 10px; right: 10px; background: white; padding: 10px; z-index: 10000;">
+        <input type="hidden" name="form-name" value="map-form">
+        <input type="text" id="name" name="name" placeholder="Name" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="hidden" id="query" name="query">
+        <button type="submit">Submit</button>
+    </form>
+
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
@@ -172,6 +169,9 @@
             
             var newUrl = window.location.pathname + '?' + params.toString();
             window.history.replaceState({ path: newUrl }, '', newUrl);
+
+            // Update the hidden input field with the query string
+            document.getElementById('query').value = params.toString();
         }
 
         function calculateArea() {
@@ -218,10 +218,15 @@
                 });
                 calculateArea();
             }
-            if (zoomParam && latParam && lngParam) {
-                var latlng = L.latLng(parseFloat(latParam), parseFloat(lngParam));
-                map.setView(latlng, parseInt(zoomParam));
+            
+            if (zoomParam) {
+                map.setZoom(parseInt(zoomParam, 10));
             }
+            
+            if (latParam && lngParam) {
+                map.setView([parseFloat(latParam), parseFloat(lngParam)]);
+            }
+            
             if (addressParam) {
                 document.getElementById('address').value = decodeURIComponent(addressParam);
             }
