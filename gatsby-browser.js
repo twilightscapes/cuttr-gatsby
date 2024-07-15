@@ -3,7 +3,7 @@
 import React from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-
+import 'leaflet/dist/leaflet.css';
 export const wrapRootElement = ({ element }) => {
 
   const stripePromise = loadStripe('pk_live_51O3tWYKHJvXfkmw3F98KZ7I7367B5T8zSl7qIWhmDzP5o4XR4hRlCWdsAdiLDaLZ3Kfal2jTTitRIDC2azwyuwgl00T2NoCR5m');
