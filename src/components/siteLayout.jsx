@@ -23,11 +23,9 @@ import userStyles from "../../static/data/userStyles.json"
 import Switch from "../components/Switch"
 import BlueCheck from './bluecheck';
 import Footer from "../components/footer"
-import IdentityModal, { useIdentityContext } from "react-netlify-identity-widget"
 
 import { RiCloseCircleFill } from "react-icons/ri";
 import { MdOutlineIosShare } from "react-icons/md";
-
 
 const Layout = ({ children }) => {
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -102,15 +100,6 @@ const Layout = ({ children }) => {
   // console.log('Current Page:', currentPage);
   // Define an array of page locations where you want to show the social menu
   const socialMenuPages = ['/pirate', '/pirate/feeds', '/pirate/explore', '/pirate/favorites'];
-
-
-  const identity = useIdentityContext()
-  const [dialog, setDialog] = React.useState(false)
-  const name =
-    (identity && identity.user && identity.user.user_metadata && identity.user.user_metadata.name) || "NoName"
-
-  console.log(JSON.stringify(identity))
-  const isLoggedIn = identity && identity.isLoggedIn
 
   
   return (
@@ -528,15 +517,6 @@ const Layout = ({ children }) => {
       )}
 
 
-<nav style={{ background: "green" }}>
-        {" "}
-        Login Status:
-        <button className="btn" onClick={() => setDialog(true)}>
-          {isLoggedIn ? `Hello ${name}, Log out here!` : "LOG IN"}
-        </button>
-      </nav>
-      <main>{children}</main>
-      <IdentityModal showDialog={dialog} onCloseDialog={() => setDialog(false)} />
 
     </>
   );
