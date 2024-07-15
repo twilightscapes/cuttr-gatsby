@@ -83,12 +83,11 @@
     <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
     
     <!-- Netlify form -->
-    <form name="map-form" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/thanks" style="position: fixed; bottom: 10px; right: 10px; background: white; padding: 10px; z-index: 10000;">
+    <form name="map-form" method="POST" data-netlify="true" style="position: fixed; top: 10px; right: 10px; background: white; padding: 10px; z-index: 10000;">
         <input type="hidden" name="form-name" value="map-form">
         <input type="text" id="name" name="name" placeholder="Name" required>
         <input type="email" id="email" name="email" placeholder="Email" required>
         <input type="hidden" id="query" name="query">
-        <input type="hidden" name="form-name" value="contact" />
         <button type="submit">Submit</button>
     </form>
 
@@ -171,8 +170,8 @@
             var newUrl = window.location.pathname + '?' + params.toString();
             window.history.replaceState({ path: newUrl }, '', newUrl);
 
-            // Update the hidden input field with the query string
-            document.getElementById('query').value = params.toString();
+            // Update the hidden input field with the full URL
+            document.getElementById('query').value = window.location.href;
         }
 
         function calculateArea() {
