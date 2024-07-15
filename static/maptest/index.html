@@ -200,62 +200,57 @@
             });
 
             var totalAreaSqFt = totalArea * 10.7639;
+            var costPerSqFt = calculateCostPerSqFt(totalAreaSqFt);
+            var totalCost = totalAreaSqFt * costPerSqFt;
 
-            if (totalAreaSqFt > 10000) {
-                document.getElementById('area').innerHTML = '<div class="custom-quote-notice">A custom quote is needed</div>';
-                document.getElementById('cost').value = 'Custom quote needed';
-            } else {
-                var costPerSqFt = calculateCostPerSqFt(totalAreaSqFt);
-                var totalCost = totalAreaSqFt * costPerSqFt;
-                
-                document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>Cost: $' + totalCost.toFixed(2);
-                
-                // Update the hidden cost field
-                document.getElementById('cost').value = totalCost.toFixed(2);
-            }
+            document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>Cost: $' + totalCost.toFixed(2);
+            
+            // Update the hidden cost field
+            document.getElementById('cost').value = totalCost.toFixed(2);
         }
 
         function calculateCostPerSqFt(areaSqFt) {
             if (areaSqFt <= 1500) {
                 return 0.08;
-            } else if (areaSqFt > 1500 && areaSqFt <= 4000) {
+            } else if (areaSqFt <= 4000) {
                 return 0.05;
-            } else if (areaSqFt > 4000 && areaSqFt <= 10000) {
+            } else if (areaSqFt <= 10000) {
                 return 0.03;
             } else {
-                return 0; // This case should not occur due to the check in calculateArea function
+                return null; // Custom quote needed
             }
         }
 
-        function loadFromQueryString() {
+        var geocoder = L.Control.Geocoder.nominatim();
+        var geocoderControl = L.Control.geocoder({ position: 'topright', geocoder: geocoder }).addTo(map);
+
+        // Decode the query string and load map state
+        function decodeQueryString() {
             var params = new URLSearchParams(window.location.search);
             var boundsParam = params.get('bounds');
             var zoomParam = params.get('zoom');
-            var latParam = params.get('lat');
-            var lngParam = params.get('lng');
+            var latParam = parseFloat(params.get('lat'));
+            var lngParam = parseFloat(params.get('lng'));
             var addressParam = params.get('address');
 
             if (boundsParam) {
                 var bounds = JSON.parse(decodeURIComponent(boundsParam));
-                var geojsonLayer = L.geoJSON(bounds);
-                drawnItems.clearLayers();
-                geojsonLayer.eachLayer(function(layer) {
+                bounds.features.forEach(function(feature) {
+                    var layer = L.geoJSON(feature);
                     drawnItems.addLayer(layer);
                 });
             }
-            if (zoomParam) {
-                map.setZoom(parseInt(zoomParam, 10));
+
+            if (!isNaN(latParam) && !isNaN(lngParam)) {
+                map.setView([latParam, lngParam], zoomParam);
             }
-            if (latParam && lngParam) {
-                map.setView([parseFloat(latParam), parseFloat(lngParam)]);
-            }
+
             if (addressParam) {
                 document.getElementById('address').value = decodeURIComponent(addressParam);
             }
-            calculateArea();
         }
 
-        loadFromQueryString();
+        decodeQueryString();
     </script>
 </body>
 </html>
