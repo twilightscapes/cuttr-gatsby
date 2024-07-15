@@ -8,38 +8,21 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-draw/dist/leaflet.draw.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">
     <style>
-
-        body{padding:0; margin:0; overflow: hidden;}
-        #map {
-            height: 100vh;
-            z-index: 1;
-        }
+        body { padding: 0; margin: 0; overflow: hidden; }
+        #map { height: 100vh; z-index: 1; }
         #area {
             position: fixed;
-            /* top:100px;
-            right:10px; */
-            /* place-self: center; */
             background: white;
             padding: 5px;
-            /* z-index: 1; */
-            /* border: 1px solid red;
-            width:100%;
-            max-width: 240px; */
-            /* opacity: .4; */
-      /* position: absolute; */
-      bottom: 15vh;
-      left:40%;
-      right:40%;
-      /* right: 45px; */
-      z-index: 9999;
-      width:100%;
-      max-width: 20vw;
-      margin:0 auto;
+            bottom: 15vh;
+            left: 40%;
+            right: 40%;
+            z-index: 9999;
+            width: 100%;
+            max-width: 20vw;
+            margin: 0 auto;
         }
         .leaflet-draw-toolbar {
-            /* position: absolute;
-            top: 10px;
-            left: 10px; */
             background-color: white;
             padding: 10px;
             border-radius: 5px;
@@ -57,59 +40,56 @@
             border-radius: 3px;
             cursor: pointer;
         }
-        .leaflet-draw-actions a:hover {
-            background-color: #1e6ee6;
-        }
+        .leaflet-draw-actions a:hover { background-color: #1e6ee6; }
         .leaflet-draw-actions a.disabled {
             background-color: #cccccc;
             cursor: not-allowed;
         }
-        .leaflet-draw-actions a.disabled:hover {
-            background-color: #cccccc;
-        }
-
-        .leaflet-control-geocoder-form{
-    
-            /* margin-bottom: 5px; */
-            /* text-align: center; */
-            /* background-color: #3388ff; */
-            /* color: white; */
-            /* padding: 8px 10px; */
-            text-decoration: none;
-            /* border-radius: 3px; */
-            cursor: pointer;
-
-            align-items: center;
-        }
-
-        .leaflet-control-geocoder .leaflet-control-geocoder-icon{
+        .leaflet-draw-actions a.disabled:hover { background-color: #cccccc; }
+        .leaflet-control-geocoder-form { cursor: pointer; align-items: center; }
+        .leaflet-control-geocoder .leaflet-control-geocoder-icon {
             text-align: center;
             padding: 24px 24px;
             text-decoration: none;
             border-radius: 3px;
             cursor: pointer;
         }
-        
-
         .logo {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin:0 auto;
-    }
-    .logo img {
-      opacity: .4;
-      position: absolute;
-      bottom: 20px;
-      z-index: 9999;
-      width:100%;
-      max-width: 20vw;
-      margin:0 auto;
-    }
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .logo img {
+            opacity: .4;
+            position: absolute;
+            bottom: 20px;
+            z-index: 9999;
+            width: 100%;
+            max-width: 20vw;
+            margin: 0 auto;
+        }
+
+
+        .leaflet-draw-draw-polygon {
+            background:transparent !important;
+            background-image: url('https://cuttr.app/assets/Cuttr-icon.png') !important; 
+            background-size: contain !important;
+            /* background-repeat: no-repeat !important; */
+            /* border:1px solid red;
+        
+            content:' POOP ';
+            position:absolute;
+            top:0; */
+        }
+
+        /* .leaflet-draw-toolbar{background:transparent !important; padding:20px !important; border: none !important;} */
+
+
+        
     </style>
 </head>
 <body>
-    
     <div id="map"></div>
     <div id="area">Yard Size: 0 sq ft</div>
     <input type="text" id="address" placeholder="Enter an address">
@@ -119,9 +99,7 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
     <script>
-        var map = L.map('map', {
-            zoomControl: false 
-        }).setView([30.38, -89.03], 10);
+        var map = L.map('map', { zoomControl: false }).setView([30.38, -89.03], 10);
 
         L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
             maxZoom: 21,
@@ -141,11 +119,17 @@
                 marker: false,
                 circlemarker: false
             },
-            edit: {
-                featureGroup: drawnItems
-            }
+            edit: { featureGroup: drawnItems }
         });
         map.addControl(drawControl);
+
+        // Update the tooltip text for the draw polygon button
+        document.addEventListener('DOMContentLoaded', function() {
+            var polygonButton = document.querySelector('.leaflet-draw-draw-polygon');
+            if (polygonButton) {
+                polygonButton.title = "Draw your yard boundary";
+            }
+        });
 
         map.on(L.Draw.Event.CREATED, function (event) {
             var layer = event.layer;
@@ -183,8 +167,7 @@
             if (address) {
                 params.set('address', encodeURIComponent(address));
             } else {
-                ''
-                // params.delete('address'); 
+                params.delete('address'); 
             }
             
             var newUrl = window.location.pathname + '?' + params.toString();
