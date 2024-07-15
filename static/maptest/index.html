@@ -15,14 +15,26 @@
             z-index: 1;
         }
         #area {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
+            position: fixed;
+            /* top:100px;
+            right:10px; */
+            /* place-self: center; */
             background: white;
             padding: 5px;
-            z-index: 1;
-            border: 1px solid red;
-            max-width: 240px;
+            /* z-index: 1; */
+            /* border: 1px solid red;
+            width:100%;
+            max-width: 240px; */
+            /* opacity: .4; */
+      /* position: absolute; */
+      bottom: 15vh;
+      left:40%;
+      right:40%;
+      /* right: 45px; */
+      z-index: 9999;
+      width:100%;
+      max-width: 20vw;
+      margin:0 auto;
         }
         .leaflet-draw-toolbar {
             /* position: absolute;
@@ -55,6 +67,56 @@
         .leaflet-draw-actions a.disabled:hover {
             background-color: #cccccc;
         }
+
+        .leaflet-control-geocoder-form{
+    
+            /* margin-bottom: 5px; */
+            /* text-align: center; */
+            /* background-color: #3388ff; */
+            /* color: white; */
+            /* padding: 8px 10px; */
+            text-decoration: none;
+            /* border-radius: 3px; */
+            cursor: pointer;
+        }
+
+        .leaflet-control-geocoder .leaflet-control-geocoder-icon{
+
+    
+            text-align: center;
+            background-color: #3388ff;
+            color: white;
+            padding: 8px 10px;
+            text-decoration: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+
+        .logo {
+      /* position: absolute;
+      top: 0; */
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin:0 auto;
+      /* height: 100vh;
+      place-content: center;
+      border: 0px solid red;
+      margin: 0 auto;
+      z-index: 10000; */
+    }
+    .logo img {
+    
+      opacity: .4;
+      position: absolute;
+      bottom: 20px;
+      /* right: 45px; */
+      z-index: 9999;
+      width:100%;
+      max-width: 20vw;
+      margin:0 auto;
+    }
     </style>
 </head>
 <body>
@@ -62,7 +124,7 @@
     <div id="map"></div>
     <div id="area">Yard Size: 0 sq ft</div>
     <input type="text" id="address" placeholder="Enter an address">
-
+    <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>

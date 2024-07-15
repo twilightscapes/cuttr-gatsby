@@ -54,7 +54,7 @@ const IndexPage = () => {
 
 
       <section className="outer section spud2">
-        <div className="container spud" style={{ padding: '0', height: 'calc(100vh - 60px)', position:'relative' }}>
+        <div className="container spud" style={{ padding: '0', height: 'calc(100dvh - 60px)', position:'relative' }}>
     
 
           
@@ -69,7 +69,7 @@ const IndexPage = () => {
     
           {/* <Map location={location} onMapUpdate={handleMapUpdate} /> */}
 
-          <iframe title="location map" className="flexcheek" width="100vw" height="100dvh" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="/maptest/" allowFullScreen={true} loading="lazy" origin="https://cuttr.app" style={{maxWidth:'100%', minWidth:'100%', minHeight:'60vh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
+          <iframe title="location1 map1" className="flexcheek" width="100vw" height="100dvh" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="https://cuttr.app/maptest/" allowFullScreen={true} loading="lazy" origin="https://cuttr.app" style={{maxWidth:'100%', minWidth:'100%', minHeight:'100dvh', margin:'0 auto', border:'.5vw solid rgba(0,0,0,0.60)', borderRadius:'12px'}}></iframe>
 
 
         </div>
