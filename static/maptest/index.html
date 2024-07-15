@@ -109,148 +109,169 @@
     <script>
         var map = L.map('map', { zoomControl: false }).setView([30.38, -89.03], 10);
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
-            maxZoom: 21,
-            tileSize: 512,
-            zoomOffset: -1,
-        }).addTo(map);
+L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
+    maxZoom: 21,
+    tileSize: 512,
+    zoomOffset: -1,
+}).addTo(map);
 
-        var drawnItems = new L.FeatureGroup();
-        map.addLayer(drawnItems);
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
 
-        var drawControl = new L.Control.Draw({
-            draw: {
-                polyline: false,
-                polygon: true,
-                rectangle: false,
-                circle: false,
-                marker: false,
-                circlemarker: false
-            },
-            edit: { featureGroup: drawnItems }
-        });
-        map.addControl(drawControl);
+var drawControl = new L.Control.Draw({
+    draw: {
+        polyline: false,
+        polygon: true,
+        rectangle: false,
+        circle: false,
+        marker: false,
+        circlemarker: false
+    },
+    edit: { featureGroup: drawnItems }
+});
+map.addControl(drawControl);
 
-        // Update the tooltip text for the draw polygon button
-        document.addEventListener('DOMContentLoaded', function() {
-            var polygonButton = document.querySelector('.leaflet-draw-draw-polygon');
-            if (polygonButton) {
-                polygonButton.title = "Draw your yard boundary";
-            }
-        });
+// Update the tooltip text for the draw polygon button
+document.addEventListener('DOMContentLoaded', function() {
+    var polygonButton = document.querySelector('.leaflet-draw-draw-polygon');
+    if (polygonButton) {
+        polygonButton.title = "Draw your yard boundary";
+    }
+});
 
-        map.on(L.Draw.Event.CREATED, function (event) {
-            var layer = event.layer;
+map.on(L.Draw.Event.CREATED, function (event) {
+    var layer = event.layer;
+    drawnItems.addLayer(layer);
+    updateQueryString();
+    calculateArea();
+});
+
+map.on(L.Draw.Event.EDITED, function (event) {
+    updateQueryString();
+    calculateArea();
+});
+
+map.on(L.Draw.Event.DELETED, function (event) {
+    updateQueryString();
+    calculateArea();
+});
+
+map.on('moveend', function(event) {
+    updateQueryString();
+});
+
+function updateQueryString() {
+    var bounds = drawnItems.toGeoJSON();
+    var encodedBounds = encodeURIComponent(JSON.stringify(bounds));
+    var center = map.getCenter();
+    var zoomLevel = map.getZoom();
+    var address = document.getElementById('address').value.trim();
+    var params = new URLSearchParams(window.location.search);
+    
+    params.set('bounds', encodedBounds);
+    params.set('zoom', zoomLevel);
+    params.set('lat', center.lat.toFixed(5));
+    params.set('lng', center.lng.toFixed(5));
+    if (address) {
+        params.set('address', encodeURIComponent(address));
+    } else {
+        params.delete('address'); 
+    }
+    
+    var newUrl = window.location.pathname + '?' + params.toString();
+    window.history.replaceState({ path: newUrl }, '', newUrl);
+
+    // Update the hidden input field with the full URL
+    document.getElementById('query').value = window.location.href;
+}
+
+function calculateArea() {
+    var totalArea = 0;
+    drawnItems.eachLayer(function(layer) {
+        var geojson = layer.toGeoJSON();
+        var area = 0;
+        if (geojson.geometry.type === 'Polygon') {
+            area = turf.area(geojson);
+        } else if (geojson.geometry.type === 'LineString') {
+            var polygon = turf.lineToPolygon(geojson);
+            area = turf.area(polygon);
+        }
+        totalArea += area;
+    });
+
+    var totalAreaSqFt = totalArea * 10.7639;
+    var costPerSqFt = calculateCostPerSqFt(totalAreaSqFt);
+    var totalCost = totalAreaSqFt * costPerSqFt;
+
+    var areaText = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>';
+    areaText += 'Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>';
+    areaText += 'Cost: $' + totalCost.toFixed(2);
+
+    // Display a notice if area exceeds 10,000 sq ft
+    if (totalAreaSqFt > 10000) {
+        areaText += '<br><span style="color: red;">Custom quote required for areas over 10,000 sq ft.</span>';
+    }
+
+    document.getElementById('area').innerHTML = areaText;
+    
+    // Update the hidden cost field
+    document.getElementById('cost').value = totalCost.toFixed(2);
+}
+
+function calculateCostPerSqFt(areaSqFt) {
+    if (areaSqFt <= 1500) {
+        return 0.08;
+    } else if (areaSqFt <= 4000) {
+        return 0.05;
+    } else if (areaSqFt <= 10000) {
+        return 0.03;
+    } else {
+        return null; // Custom quote needed
+    }
+}
+
+var geocoder = L.Control.Geocoder.nominatim();
+var control = L.Control.geocoder({
+    geocoder: geocoder
+}).addTo(map);
+
+control.on('markgeocode', function(event) {
+    var latlng = event.geocode.center;
+    map.setView(latlng, 17);
+    document.getElementById('address').value = event.geocode.name;
+    updateQueryString();
+});
+
+function loadFromQueryString() {
+    var params = new URLSearchParams(window.location.search);
+    var boundsParam = params.get('bounds');
+    var zoomParam = params.get('zoom');
+    var latParam = params.get('lat');
+    var lngParam = params.get('lng');
+    var addressParam = params.get('address');
+
+    if (boundsParam) {
+        var bounds = JSON.parse(decodeURIComponent(boundsParam));
+        var geojsonLayer = L.geoJSON(bounds);
+        drawnItems.clearLayers();
+        geojsonLayer.eachLayer(function(layer) {
             drawnItems.addLayer(layer);
-            updateQueryString();
-            calculateArea();
         });
+    }
+    if (zoomParam) {
+        map.setZoom(parseInt(zoomParam, 10));
+    }
+    if (latParam && lngParam) {
+        map.setView([parseFloat(latParam), parseFloat(lngParam)]);
+    }
+    if (addressParam) {
+        document.getElementById('address').value = decodeURIComponent(addressParam);
+    }
+    calculateArea();
+}
 
-        map.on(L.Draw.Event.EDITED, function (event) {
-            updateQueryString();
-            calculateArea();
-        });
+loadFromQueryString();
 
-        map.on(L.Draw.Event.DELETED, function (event) {
-            updateQueryString();
-            calculateArea();
-        });
-
-        map.on('moveend', function(event) {
-            updateQueryString();
-        });
-
-        function updateQueryString() {
-            var bounds = drawnItems.toGeoJSON();
-            var encodedBounds = encodeURIComponent(JSON.stringify(bounds));
-            var center = map.getCenter();
-            var zoomLevel = map.getZoom();
-            var address = document.getElementById('address').value.trim();
-            var params = new URLSearchParams(window.location.search);
-            
-            params.set('bounds', encodedBounds);
-            params.set('zoom', zoomLevel);
-            params.set('lat', center.lat.toFixed(5));
-            params.set('lng', center.lng.toFixed(5));
-            if (address) {
-                params.set('address', encodeURIComponent(address));
-            } else {
-                params.delete('address'); 
-            }
-            
-            var newUrl = window.location.pathname + '?' + params.toString();
-            window.history.replaceState({ path: newUrl }, '', newUrl);
-
-            // Update the hidden input field with the full URL
-            document.getElementById('query').value = window.location.href;
-        }
-
-        function calculateArea() {
-            var totalArea = 0;
-            drawnItems.eachLayer(function(layer) {
-                var geojson = layer.toGeoJSON();
-                var area = 0;
-                if (geojson.geometry.type === 'Polygon') {
-                    area = turf.area(geojson);
-                } else if (geojson.geometry.type === 'LineString') {
-                    var polygon = turf.lineToPolygon(geojson);
-                    area = turf.area(polygon);
-                }
-                totalArea += area;
-            });
-
-            var totalAreaSqFt = totalArea * 10.7639;
-            var costPerSqFt = calculateCostPerSqFt(totalAreaSqFt);
-            var totalCost = totalAreaSqFt * costPerSqFt;
-
-            document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>Cost: $' + totalCost.toFixed(2);
-            
-            // Update the hidden cost field
-            document.getElementById('cost').value = totalCost.toFixed(2);
-        }
-
-        function calculateCostPerSqFt(areaSqFt) {
-            if (areaSqFt <= 1500) {
-                return 0.08;
-            } else if (areaSqFt <= 4000) {
-                return 0.05;
-            } else if (areaSqFt <= 10000) {
-                return 0.03;
-            } else {
-                return null; // Custom quote needed
-            }
-        }
-
-        var geocoder = L.Control.Geocoder.nominatim();
-        var geocoderControl = L.Control.geocoder({ position: 'topright', geocoder: geocoder }).addTo(map);
-
-        // Decode the query string and load map state
-        function decodeQueryString() {
-            var params = new URLSearchParams(window.location.search);
-            var boundsParam = params.get('bounds');
-            var zoomParam = params.get('zoom');
-            var latParam = parseFloat(params.get('lat'));
-            var lngParam = parseFloat(params.get('lng'));
-            var addressParam = params.get('address');
-
-            if (boundsParam) {
-                var bounds = JSON.parse(decodeURIComponent(boundsParam));
-                bounds.features.forEach(function(feature) {
-                    var layer = L.geoJSON(feature);
-                    drawnItems.addLayer(layer);
-                });
-            }
-
-            if (!isNaN(latParam) && !isNaN(lngParam)) {
-                map.setView([latParam, lngParam], zoomParam);
-            }
-
-            if (addressParam) {
-                document.getElementById('address').value = decodeURIComponent(addressParam);
-            }
-        }
-
-        decodeQueryString();
     </script>
 </body>
 </html>
