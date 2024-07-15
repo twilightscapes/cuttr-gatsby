@@ -21,6 +21,7 @@
             width: 100%;
             max-width: 20vw;
             margin: 0 auto;
+            text-align: center;
         }
         .leaflet-draw-toolbar {
             background-color: white;
@@ -78,7 +79,7 @@
 </head>
 <body>
     <div id="map"></div>
-    <div id="area">Yard Size: 0 sq ft</div>
+    <div id="area">Yard Size: 0 sq ft<br>Cost: $0.00</div>
     <input type="text" id="address" placeholder="Enter an address">
     <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
     
@@ -88,6 +89,7 @@
         <input type="text" id="name" name="name" placeholder="Name" required>
         <input type="email" id="email" name="email" placeholder="Email" required>
         <input type="hidden" id="query" name="query">
+        <input type="hidden" id="cost" name="cost">
         <button type="submit">Submit</button>
     </form>
 
@@ -188,7 +190,12 @@
                 totalArea += area;
             });
             var totalAreaSqFt = totalArea * 10.7639;
-            document.getElementById('area').innerText = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft';
+            var costPerSqFt = 0.03;
+            var totalCost = totalAreaSqFt * costPerSqFt;
+            document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>Cost: $' + totalCost.toFixed(2);
+            
+            // Update the hidden cost field
+            document.getElementById('cost').value = totalCost.toFixed(2);
         }
 
         var geocoder = L.Control.Geocoder.nominatim();
@@ -210,26 +217,24 @@
             var latParam = params.get('lat');
             var lngParam = params.get('lng');
             var addressParam = params.get('address');
-            
             if (boundsParam) {
                 var bounds = JSON.parse(decodeURIComponent(boundsParam));
-                L.geoJSON(bounds).eachLayer(function (layer) {
+                var geojsonLayer = L.geoJSON(bounds);
+                drawnItems.clearLayers();
+                geojsonLayer.eachLayer(function(layer) {
                     drawnItems.addLayer(layer);
                 });
-                calculateArea();
             }
-            
             if (zoomParam) {
                 map.setZoom(parseInt(zoomParam, 10));
             }
-            
             if (latParam && lngParam) {
                 map.setView([parseFloat(latParam), parseFloat(lngParam)]);
             }
-            
             if (addressParam) {
                 document.getElementById('address').value = decodeURIComponent(addressParam);
             }
+            calculateArea();
         }
 
         loadFromQueryString();
