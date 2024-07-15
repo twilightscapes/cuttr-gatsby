@@ -75,12 +75,21 @@
             background-image: url('https://cuttr.app/assets/Cuttr-icon.png') !important; 
             background-size: contain !important;
         }
+        .custom-quote-notice {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background-color: white;
+            padding: 10px;
+            z-index: 10000;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
     <div id="map"></div>
-    <div id="area">Yard Size: 0 sq ft<br>Cost: $0.00</div>
     <input type="text" id="address" placeholder="Enter an address">
+    <div id="area">Total Area: 0 sq ft<br>Cost per sq ft: $0.00<br>Cost: $0.00</div>
     <div class="logo"><img src="https://cuttr.app/assets/Cuttr-logo-wht.svg" /></div>
     
     <!-- Netlify form -->
@@ -189,26 +198,34 @@
                 }
                 totalArea += area;
             });
+
             var totalAreaSqFt = totalArea * 10.7639;
-            var costPerSqFt = 0.03;
-            var totalCost = totalAreaSqFt * costPerSqFt;
-            document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>Cost: $' + totalCost.toFixed(2);
-            
-            // Update the hidden cost field
-            document.getElementById('cost').value = totalCost.toFixed(2);
+
+            if (totalAreaSqFt > 10000) {
+                document.getElementById('area').innerHTML = '<div class="custom-quote-notice">A custom quote is needed</div>';
+                document.getElementById('cost').value = 'Custom quote needed';
+            } else {
+                var costPerSqFt = calculateCostPerSqFt(totalAreaSqFt);
+                var totalCost = totalAreaSqFt * costPerSqFt;
+                
+                document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>Cost: $' + totalCost.toFixed(2);
+                
+                // Update the hidden cost field
+                document.getElementById('cost').value = totalCost.toFixed(2);
+            }
         }
 
-        var geocoder = L.Control.Geocoder.nominatim();
-        var control = L.Control.geocoder({
-            geocoder: geocoder
-        }).addTo(map);
-
-        control.on('markgeocode', function(event) {
-            var latlng = event.geocode.center;
-            map.setView(latlng, 21);
-            document.getElementById('address').value = event.geocode.name;
-            updateQueryString();
-        });
+        function calculateCostPerSqFt(areaSqFt) {
+            if (areaSqFt <= 1500) {
+                return 0.08;
+            } else if (areaSqFt > 1500 && areaSqFt <= 4000) {
+                return 0.05;
+            } else if (areaSqFt > 4000 && areaSqFt <= 10000) {
+                return 0.03;
+            } else {
+                return 0; // This case should not occur due to the check in calculateArea function
+            }
+        }
 
         function loadFromQueryString() {
             var params = new URLSearchParams(window.location.search);
@@ -217,6 +234,7 @@
             var latParam = params.get('lat');
             var lngParam = params.get('lng');
             var addressParam = params.get('address');
+
             if (boundsParam) {
                 var bounds = JSON.parse(decodeURIComponent(boundsParam));
                 var geojsonLayer = L.geoJSON(bounds);
