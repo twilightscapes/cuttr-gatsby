@@ -116,7 +116,7 @@ const OnBoard = () => {
   }, []);
 
   return (
-    <>
+    <Layout className="thanks-page">
       <Helmet>
         <body id="body" className="homepage1" />
       </Helmet>
@@ -167,7 +167,7 @@ const OnBoard = () => {
           </div>
         </div>
       </section>
-    </>
+    </Layout>
   );
 };
 
