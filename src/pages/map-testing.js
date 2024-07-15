@@ -16,7 +16,7 @@ const IndexPage = () => {
       <Seo title="DogPoopers YardStick" />
       <section className="outer section">
         <div className="container" style={{ padding: '0', height: 'calc(100vh - 60px)', position: 'relative', overflow: 'hidden' }}>
-          <MapTest location={location} />
+          {/* <MapTest location={location} /> */}
         </div>
       </section>
     </Layout>
