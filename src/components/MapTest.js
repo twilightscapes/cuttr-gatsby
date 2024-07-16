@@ -93,17 +93,22 @@ const MapTest = () => {
   }, [map, location.search]);
 
   const updateQueryString = () => {
-    if (!map) return;
-
+    if (typeof window === 'undefined' || !map) return;
+  
     const bounds = drawnItemsRef.current.toGeoJSON();
     const params = new URLSearchParams(location.search);
     params.set('bounds', encodeURIComponent(JSON.stringify(bounds)));
-    params.set('zoom', map.getZoom());
-    params.set('lat', map.getCenter().lat);
-    params.set('lng', map.getCenter().lng);
+    params.set('zoom', map.getZoom().toString());
+    params.set('lat', map.getCenter().lat.toString());
+    params.set('lng', map.getCenter().lng.toString());
     params.set('address', document.getElementById('address').value);
-    window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+  
+    // Check if window is defined before using history API
+    if (typeof window !== 'undefined') {
+      window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
+    }
   };
+  
 
   const calculateArea = () => {
     let totalArea = 0;
