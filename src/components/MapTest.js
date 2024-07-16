@@ -93,8 +93,7 @@ const MapTest = () => {
   }, [map, location.search]);
 
   const updateQueryString = () => {
-    if (typeof window === 'undefined' || !map) return;
-  
+    if (!map) return;
     const bounds = drawnItemsRef.current.toGeoJSON();
     const params = new URLSearchParams(location.search);
     params.set('bounds', encodeURIComponent(JSON.stringify(bounds)));
@@ -102,13 +101,18 @@ const MapTest = () => {
     params.set('lat', map.getCenter().lat.toString());
     params.set('lng', map.getCenter().lng.toString());
     params.set('address', document.getElementById('address').value);
-  
+
     // Check if window is defined before using history API
     if (typeof window !== 'undefined') {
       window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
     }
   };
-  
+
+  useEffect(() => {
+    if (map) {
+      updateQueryString();
+    }
+  }, [map, location.search]);
 
   const calculateArea = () => {
     let totalArea = 0;
@@ -176,6 +180,37 @@ const MapTest = () => {
     }
   };
 
+  useEffect(() => {
+    if (map) {
+      map.on('moveend', () => {
+        updateQueryString();
+      });
+
+      map.on('zoomend', () => {
+        updateQueryString();
+      });
+
+      map.on(L.Draw.Event.CREATED, (event) => {
+        const layer = event.layer;
+        drawnItemsRef.current.addLayer(layer);
+        const center = layer.getBounds().getCenter(); // Get center of drawn shape
+        const centerMarker = L.marker(center, { icon: markerIcon }).addTo(markersRef.current); // Add marker at center of drawn shape
+        updateQueryString();
+        calculateArea();
+      });
+
+      map.on(L.Draw.Event.EDITED, () => {
+        updateQueryString();
+        calculateArea();
+      });
+
+      map.on(L.Draw.Event.DELETED, () => {
+        updateQueryString();
+        calculateArea();
+      });
+    }
+  }, [map]);
+
   const loadFromQueryString = () => {
     const params = new URLSearchParams(location.search);
     const boundsParam = params.get('bounds');
@@ -212,50 +247,44 @@ const MapTest = () => {
 
   return (
     <div>
-      <div style={{ position: 'relative', display: 'flex' }}>
+      <div style={{ position: 'relative' }}>
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
             justifyContent: 'center',
+            background: '#fff',
             alignItems: 'center',
-            position: 'absolute',
-            bottom: '10px',
-            left: '10px',
-            zIndex: '1000',
           }}
         >
           <input
             id="address"
             type="text"
-            placeholder="Enter an address"
-            style={{
-              width: '300px',
-              padding: '8px',
-              marginBottom: '10px',
-              fontSize: '16px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                handleSearch(e);
-              }
-            }}
+            placeholder="Enter your address"
+            style={{ width: '380px', marginBottom: '10px', padding: '5px' }}
           />
-          <button
-            onClick={handleSearch}
-            style={{ margin: '10px', padding: '8px 16px', background: '#007bff', color: '#fff', border: 'none', cursor: 'pointer' }}
-          >
+          <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '5px 10px' }}>
             Search
           </button>
         </div>
-        <div ref={mapRef} style={{ width: '100%', height: '100vh', position: 'relative', zIndex: '0' }} />
-
         <div
+          id="map"
+          ref={mapRef}
+          style={{ width: '100%', height: '500px', position: 'relative', zIndex: '0' }}
+        ></div>
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            zIndex: '1000',
+            background: '#fff',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          }}
           dangerouslySetInnerHTML={{ __html: areaText }}
-          style={{ position: 'absolute', bottom: '0', right: '10px', textAlign: 'right', padding: '10px', background: '#fff', zIndex: '1000' }}
-        />
+        ></div>
       </div>
     </div>
   );
