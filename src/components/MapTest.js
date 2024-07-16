@@ -47,10 +47,10 @@ const MapTest = () => {
         zoom: initialZoom,
         layers: [
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
+            maxZoom: 21,
           }),
           L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-            maxZoom: 19,
+            maxZoom: 21,
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
           }),
         ],
@@ -176,37 +176,6 @@ const MapTest = () => {
     }
   };
 
-  useEffect(() => {
-    if (map) {
-      map.on('moveend', () => {
-        updateQueryString();
-      });
-
-      map.on('zoomend', () => {
-        updateQueryString();
-      });
-
-      map.on(L.Draw.Event.CREATED, (event) => {
-        const layer = event.layer;
-        drawnItemsRef.current.addLayer(layer);
-        const center = layer.getBounds().getCenter(); // Get center of drawn shape
-        const centerMarker = L.marker(center, { icon: markerIcon }).addTo(markersRef.current); // Add marker at center of drawn shape
-        updateQueryString();
-        calculateArea();
-      });
-
-      map.on(L.Draw.Event.EDITED, () => {
-        updateQueryString();
-        calculateArea();
-      });
-
-      map.on(L.Draw.Event.DELETED, () => {
-        updateQueryString();
-        calculateArea();
-      });
-    }
-  }, [map]);
-
   const loadFromQueryString = () => {
     const params = new URLSearchParams(location.search);
     const boundsParam = params.get('bounds');
@@ -243,7 +212,7 @@ const MapTest = () => {
 
   return (
     <div>
-      <div style={{ position: 'relative', display:'flex', }}>
+      <div style={{ position: 'relative', display: 'flex' }}>
         <div
           style={{
             display: 'flex',
@@ -281,13 +250,13 @@ const MapTest = () => {
             Search
           </button>
         </div>
-        <div ref={mapRef} style={{ width: '100%', height: '100dvh', position: 'relative', zIndex: '0' }} />
+        <div ref={mapRef} style={{ width: '100%', height: '100vh', position: 'relative', zIndex: '0' }} />
 
-        <div dangerouslySetInnerHTML={{ __html: areaText }} style={{position:'absolute', bottom:'0', right:'10px', textAlign: 'center', marginTop: '10px', background:'#eee', color:'#222' }} />
-
+        <div
+          dangerouslySetInnerHTML={{ __html: areaText }}
+          style={{ position: 'absolute', bottom: '0', right: '10px', textAlign: 'right', padding: '10px', background: '#fff', zIndex: '1000' }}
+        />
       </div>
-
-      
     </div>
   );
 };

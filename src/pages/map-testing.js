@@ -10,7 +10,7 @@ const IndexPage = () => {
       <Helmet>
         <body id="body" className="homepage noscroll install" style={{ overflow: 'hidden' }} />
       </Helmet>
-      <Seo title="Map Registration" />
+      <Seo title="Cuttr Map" />
       <section className="outer section">
         <div className="container" style={{ padding: '0', minHeight: '' }}>
           <MapTest />
