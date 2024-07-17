@@ -12,11 +12,8 @@ import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import markerIconUrl from '../../static/assets/Cuttr-icon.png';
 import markerIconShadowUrl from '../../static/assets/Cuttr-icon.png';
 
-// Check if window is defined (to prevent SSR issues)
-const isBrowser = typeof window !== 'undefined';
-
 // Create marker icon instances
-const markerIcon = isBrowser ? L.icon({
+const markerIcon = L.icon({
   iconUrl: markerIconUrl,
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -24,7 +21,7 @@ const markerIcon = isBrowser ? L.icon({
   shadowUrl: markerIconShadowUrl,
   shadowSize: [41, 41],
   shadowAnchor: [12, 41],
-}) : null;
+});
 
 const MapTest = () => {
   const mapRef = useRef(null);
@@ -90,13 +87,13 @@ const MapTest = () => {
       }
     };
 
-    if (isBrowser && !map) {
+    if (!map) {
       initializeMap();
     }
   }, [map, location.search]);
 
   const updateQueryString = () => {
-    if (!map || !isBrowser) return;
+    if (!map) return;
     const bounds = drawnItemsRef.current.toGeoJSON();
     const params = new URLSearchParams(location.search);
     params.set('bounds', encodeURIComponent(JSON.stringify(bounds)));
@@ -112,7 +109,7 @@ const MapTest = () => {
   };
 
   useEffect(() => {
-    if (isBrowser && map) {
+    if (map) {
       updateQueryString();
     }
   }, [map, location.search]);
@@ -162,7 +159,7 @@ const MapTest = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     const address = document.getElementById('address').value.trim();
-    if (isBrowser && map && address) {
+    if (map && address) {
       const geocoder = L.Control.Geocoder.nominatim();
       geocoder.geocode(address, (results) => {
         if (results.length > 0) {
@@ -184,7 +181,7 @@ const MapTest = () => {
   };
 
   useEffect(() => {
-    if (isBrowser && map) {
+    if (map) {
       map.on('moveend', () => {
         updateQueryString();
       });
@@ -225,65 +222,70 @@ const MapTest = () => {
     if (boundsParam) {
       const bounds = JSON.parse(decodeURIComponent(boundsParam));
       const geojsonLayer = L.geoJSON(bounds);
-      drawnItemsRef.current.addLayer(geojsonLayer);
-      map.fitBounds(geojsonLayer.getBounds());
+      drawnItemsRef.current.clearLayers();
+      geojsonLayer.eachLayer(function (layer) {
+        drawnItemsRef.current.addLayer(layer);
+      });
     }
-
-    if (zoomParam && latParam && lngParam) {
-      map.setView([parseFloat(latParam), parseFloat(lngParam)], parseInt(zoomParam, 10));
+    if (zoomParam) {
       setZoomLevel(parseInt(zoomParam, 10));
     }
-
-    if (addressParam) {
-      document.getElementById('address').value = addressParam;
+    if (latParam && lngParam) {
+      map.setView([parseFloat(latParam), parseFloat(lngParam)]);
     }
+    if (addressParam) {
+      document.getElementById('address').value = decodeURIComponent(addressParam);
+    }
+    calculateArea();
   };
 
   useEffect(() => {
-    if (isBrowser && map) {
+    if (map) {
       loadFromQueryString();
     }
-  }, [map, location.search]);
+  }, [map]);
 
   return (
     <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          background: '#fff',
-          alignItems: 'center',
-        }}
-      >
-        <input
-          id="address"
-          type="text"
-          placeholder="Enter your address"
-          style={{ width: '380px', marginBottom: '10px', padding: '5px' }}
-        />
-        <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '5px 10px' }}>
-          Search
-        </button>
+      <div style={{ position: 'relative' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            background: '#fff',
+            alignItems: 'center',
+          }}
+        >
+          <input
+            id="address"
+            type="text"
+            placeholder="Enter your address"
+            style={{ width: '380px', marginBottom: '10px', padding: '5px' }}
+          />
+          <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '5px 10px' }}>
+            Search
+          </button>
+        </div>
+        <div
+          id="map"
+          ref={mapRef}
+          style={{ width: '100%', height: '500px', position: 'relative', zIndex: '0' }}
+        ></div>
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            zIndex: '1000',
+            background: '#fff',
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '5px',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          }}
+          dangerouslySetInnerHTML={{ __html: areaText }}
+        ></div>
       </div>
-      <div
-        id="map"
-        ref={mapRef}
-        style={{ width: '100%', height: '500px', position: 'relative', zIndex: '0' }}
-      ></div>
-      <div
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px',
-          zIndex: '1000',
-          background: '#fff',
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '5px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        }}
-        dangerouslySetInnerHTML={{ __html: areaText }}
-      ></div>
     </div>
   );
 };
