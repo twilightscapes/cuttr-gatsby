@@ -8,21 +8,6 @@ import { useLocation } from '@reach/router';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 
-// Import marker icon images (adjust paths as necessary)
-import markerIconUrl from '../../static/assets/Cuttr-icon.png';
-import markerIconShadowUrl from '../../static/assets/Cuttr-icon.png';
-
-// Create marker icon instances
-const markerIcon = L.icon({
-  iconUrl: markerIconUrl,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowUrl: markerIconShadowUrl,
-  shadowSize: [41, 41],
-  shadowAnchor: [12, 41],
-});
-
 const MapTest = () => {
   const mapRef = useRef(null);
   const drawnItemsRef = useRef(new L.FeatureGroup());
@@ -102,7 +87,6 @@ const MapTest = () => {
     params.set('lng', map.getCenter().lng.toString());
     params.set('address', document.getElementById('address').value);
 
-    // Check if window is defined before using history API
     if (typeof window !== 'undefined') {
       window.history.replaceState({}, '', `${location.pathname}?${params.toString()}`);
     }
@@ -164,12 +148,10 @@ const MapTest = () => {
       geocoder.geocode(address, (results) => {
         if (results.length > 0) {
           const { lat, lng } = results[0].center;
-          const addressMarker = L.marker([lat, lng], { icon: markerIcon }).addTo(markersRef.current);
+          L.marker([lat, lng]).addTo(markersRef.current); // Add marker to LayerGroup
           map.setView([lat, lng], 21); // Set view to the first result with zoom level 21
-          setZoomLevel(21); // Update state with zoom level
-
           drawnItemsRef.current.clearLayers(); // Clear drawn shapes
-          const drawnMarker = L.marker([lat, lng], { icon: markerIcon }).addTo(drawnItemsRef.current); // Add marker at drawn shape center
+          L.marker([lat, lng]).addTo(drawnItemsRef.current); // Add marker to drawn items
 
           updateQueryString();
           calculateArea();
@@ -194,7 +176,8 @@ const MapTest = () => {
         const layer = event.layer;
         drawnItemsRef.current.addLayer(layer);
         const center = layer.getBounds().getCenter(); // Get center of drawn shape
-        const centerMarker = L.marker(center, { icon: markerIcon }).addTo(markersRef.current); // Add marker at center of drawn shape
+        L.marker(center).addTo(markersRef.current); // Add marker at center of drawn shape
+
         updateQueryString();
         calculateArea();
       });
@@ -262,30 +245,13 @@ const MapTest = () => {
             placeholder="Enter your address"
             style={{ width: '380px', marginBottom: '10px', padding: '5px' }}
           />
-          <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '5px 10px' }}>
+          <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '5px' }}>
             Search
           </button>
         </div>
-        <div
-          id="map"
-          ref={mapRef}
-          style={{ width: '100%', height: '500px', position: 'relative', zIndex: '0' }}
-        ></div>
-        <div
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            zIndex: '1000',
-            background: '#fff',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          }}
-          dangerouslySetInnerHTML={{ __html: areaText }}
-        ></div>
+        <div id="map" ref={mapRef} style={{ width: '100%', height: '500px' }} />
       </div>
+      <div id="areaText" dangerouslySetInnerHTML={{ __html: areaText }} />
     </div>
   );
 };
