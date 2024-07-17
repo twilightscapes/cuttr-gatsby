@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">
     <style>
         body { padding: 0; margin: 0; overflow: hidden; max-width: 100dvw; max-height: 100dvh; }
-        #map { height: 100vh; z-index: 1; }
+        #map { height: 100vh; z-index: 0; }
         #area {
             position: fixed;
             padding: 5px;
@@ -87,41 +87,40 @@
             z-index: 10000;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
         }
-        input {font-size: 16px !important;
+        input {
+            font-size: 16px !important;
             background: rgba(0,0,0,0.9);
-
-            padding:1vh 1vw;
+            padding: 1vh 1vw;
+            color: #222;
+            border-radius: 3px;
+            border: none;
         }
     </style>
 </head>
 <body>
     <div id="map"></div>
 
+    <div id="area" style="display:none;">Total Area: 0 sq ft<br>Cost per sq ft: $0.00<br>Cost: $0.00</div>
 
-    
-    
-    <div id="area">Total Area: 0 sq ft<br>Cost per sq ft: $0.00<br>Cost: $0.00</div>
+    <div style="display:flex; justify-content: center; align-items: center; position:relative;">
+        <input type="text" id="address" placeholder="Enter an address">
 
-<div style="display:flex; justify-content: center; align-items: center; position:relative; ">
+        <img class="logo" src="https://cuttr.app/assets/Cuttr-logo-wht.svg" />
 
-    <input type="text" id="address" placeholder="Enter an address" style="color:#222;">
-
-    <img class="logo" src="https://cuttr.app/assets/Cuttr-logo-wht.svg" />
-    
-    <form name="map-form" method="POST" data-netlify="true" style="position: fixed; bottom: 0; left:0; right: 0; text-align: center;
-    background: rgba(0,0,0,0.7);
-    color:#fff;
-    font-size: clamp(1.6rem,2.5vw,3rem);
-     padding: 10px; z-index: 10000;">
-        <input type="hidden" name="form-name" value="map-form">
-        <input type="text" id="name" name="name" placeholder="Name" style="color:#fff; border-radius:3px; border:none;" required>
-        <input type="email" id="email" name="email" placeholder="Email" style="color:#fff; border-radius:3px; border:none;" required>
-        <input type="hidden" id="query" name="query">
-        <input type="hidden" id="cost" name="cost">
-        <button type="submit">Submit</button>
-    </form>
-</div>
-
+        <form name="map-form" method="POST" data-netlify="true" style="position: fixed; bottom: 0; left: 0; right: 0; text-align: center;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            font-size: clamp(1.6rem,2.5vw,3rem);
+            padding: 10px;
+            z-index: 10000;">
+            <input type="hidden" name="form-name" value="map-form">
+            <input type="text" id="name" name="name" placeholder="Name" style="color:#fff; border-radius:3px; border:none;" required>
+            <input type="email" id="email" name="email" placeholder="Email" style="color:#fff; border-radius:3px; border:none;" required>
+            <input type="hidden" id="query" name="query">
+            <input type="hidden" id="cost" name="cost">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-draw/dist/leaflet.draw.js"></script>
@@ -130,169 +129,208 @@
     <script>
         var map = L.map('map', { zoomControl: false }).setView([30.38, -89.03], 10);
 
-L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
-    maxZoom: 21,
-    tileSize: 512,
-    zoomOffset: -1,
-}).addTo(map);
+        L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGFzZXJsYXduIiwiYSI6ImNseTc2czRlbzAxaXMyanB4a3JqNGg0c2QifQ.XllLo86E6MxKyH8ycZJKHQ', {
+            maxZoom: 21,
+            tileSize: 512,
+            zoomOffset: -1,
+        }).addTo(map);
 
-var drawnItems = new L.FeatureGroup();
-map.addLayer(drawnItems);
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
 
-var drawControl = new L.Control.Draw({
-    draw: {
-        polyline: false,
-        polygon: true,
-        rectangle: false,
-        circle: false,
-        marker: false,
-        circlemarker: false
-    },
-    edit: { featureGroup: drawnItems }
-});
-map.addControl(drawControl);
-
-// Update the tooltip text for the draw polygon button
-document.addEventListener('DOMContentLoaded', function() {
-    var polygonButton = document.querySelector('.leaflet-draw-draw-polygon');
-    if (polygonButton) {
-        polygonButton.title = "Draw your yard boundary";
-    }
-});
-
-map.on(L.Draw.Event.CREATED, function (event) {
-    var layer = event.layer;
-    drawnItems.addLayer(layer);
-    updateQueryString();
-    calculateArea();
-});
-
-map.on(L.Draw.Event.EDITED, function (event) {
-    updateQueryString();
-    calculateArea();
-});
-
-map.on(L.Draw.Event.DELETED, function (event) {
-    updateQueryString();
-    calculateArea();
-});
-
-map.on('moveend', function(event) {
-    updateQueryString();
-});
-
-function updateQueryString() {
-    var bounds = drawnItems.toGeoJSON();
-    var encodedBounds = encodeURIComponent(JSON.stringify(bounds));
-    var center = map.getCenter();
-    var zoomLevel = map.getZoom();
-    var address = document.getElementById('address').value.trim();
-    var params = new URLSearchParams(window.location.search);
-    
-    params.set('bounds', encodedBounds);
-    params.set('zoom', zoomLevel);
-    params.set('lat', center.lat.toFixed(5));
-    params.set('lng', center.lng.toFixed(5));
-    if (address) {
-        params.set('address', encodeURIComponent(address));
-    } else {
-        params.delete('address'); 
-    }
-    
-    var newUrl = window.location.pathname + '?' + params.toString();
-    window.history.replaceState({ path: newUrl }, '', newUrl);
-
-    // Update the hidden input field with the full URL
-    document.getElementById('query').value = window.location.href;
-}
-
-function calculateArea() {
-    var totalArea = 0;
-    drawnItems.eachLayer(function(layer) {
-        var geojson = layer.toGeoJSON();
-        var area = 0;
-        if (geojson.geometry.type === 'Polygon') {
-            area = turf.area(geojson);
-        } else if (geojson.geometry.type === 'LineString') {
-            var polygon = turf.lineToPolygon(geojson);
-            area = turf.area(polygon);
-        }
-        totalArea += area;
-    });
-
-    var totalAreaSqFt = totalArea * 10.7639;
-    var costPerSqFt = calculateCostPerSqFt(totalAreaSqFt);
-    var totalCost = totalAreaSqFt * costPerSqFt;
-
-    var areaText = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>';
-    areaText += 'Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>';
-    areaText += 'Cost: $' + totalCost.toFixed(2);
-
-    // Display a notice if area exceeds 10,000 sq ft
-    if (totalAreaSqFt > 10000) {
-        areaText += '<br><span style="color: red;">Custom quote required for areas over 10,000 sq ft.</span>';
-    }
-
-    document.getElementById('area').innerHTML = areaText;
-    
-    // Update the hidden cost field
-    document.getElementById('cost').value = totalCost.toFixed(2);
-}
-
-function calculateCostPerSqFt(areaSqFt) {
-    if (areaSqFt <= 1500) {
-        return 0.08;
-    } else if (areaSqFt <= 4000) {
-        return 0.05;
-    } else if (areaSqFt <= 10000) {
-        return 0.03;
-    } else {
-        return null; // Custom quote needed
-    }
-}
-
-var geocoder = L.Control.Geocoder.nominatim();
-var control = L.Control.geocoder({
-    geocoder: geocoder
-}).addTo(map);
-
-control.on('markgeocode', function(event) {
-    var latlng = event.geocode.center;
-    map.setView(latlng, 17);
-    document.getElementById('address').value = event.geocode.name;
-    updateQueryString();
-});
-
-function loadFromQueryString() {
-    var params = new URLSearchParams(window.location.search);
-    var boundsParam = params.get('bounds');
-    var zoomParam = params.get('zoom');
-    var latParam = params.get('lat');
-    var lngParam = params.get('lng');
-    var addressParam = params.get('address');
-
-    if (boundsParam) {
-        var bounds = JSON.parse(decodeURIComponent(boundsParam));
-        var geojsonLayer = L.geoJSON(bounds);
-        drawnItems.clearLayers();
-        geojsonLayer.eachLayer(function(layer) {
-            drawnItems.addLayer(layer);
+        var drawControl = new L.Control.Draw({
+            draw: {
+                polyline: false,
+                polygon: true,
+                rectangle: false,
+                circle: false,
+                marker: false,
+                circlemarker: false
+            },
+            edit: { featureGroup: drawnItems }
         });
-    }
-    if (zoomParam) {
-        map.setZoom(parseInt(zoomParam, 10));
-    }
-    if (latParam && lngParam) {
-        map.setView([parseFloat(latParam), parseFloat(lngParam)]);
-    }
-    if (addressParam) {
-        document.getElementById('address').value = decodeURIComponent(addressParam);
-    }
-    calculateArea();
-}
+        map.addControl(drawControl);
 
-loadFromQueryString();
+        // Update the tooltip text for the draw polygon button
+        document.addEventListener('DOMContentLoaded', function() {
+            var polygonButton = document.querySelector('.leaflet-draw-draw-polygon');
+            if (polygonButton) {
+                polygonButton.title = "Draw your yard boundary";
+            }
+        });
 
+        map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+            drawnItems.addLayer(layer);
+            updateQueryString();
+            calculateArea();
+            checkAreaSize();
+        });
+
+        map.on(L.Draw.Event.EDITED, function (event) {
+            updateQueryString();
+            calculateArea();
+            checkAreaSize();
+        });
+
+        map.on(L.Draw.Event.DELETED, function (event) {
+            updateQueryString();
+            calculateArea();
+            checkAreaSize();
+        });
+
+        map.on('moveend', function(event) {
+            updateQueryString();
+        });
+
+        function updateQueryString() {
+            var bounds = drawnItems.toGeoJSON();
+            var encodedBounds = encodeURIComponent(JSON.stringify(bounds));
+            var center = map.getCenter();
+            var zoomLevel = map.getZoom();
+            var address = document.getElementById('address').value.trim();
+            var params = new URLSearchParams(window.location.search);
+            
+            params.set('bounds', encodedBounds);
+            params.set('zoom', zoomLevel);
+            params.set('lat', center.lat.toFixed(5));
+            params.set('lng', center.lng.toFixed(5));
+            if (address) {
+                params.set('address', encodeURIComponent(address));
+            } else {
+                params.delete('address'); 
+            }
+            
+            var newUrl = window.location.pathname + '?' + params.toString();
+            window.history.replaceState({ path: newUrl }, '', newUrl);
+
+            // Update the hidden input field with the full URL
+            document.getElementById('query').value = window.location.href;
+        }
+
+        function calculateArea() {
+            var totalArea = 0;
+            drawnItems.eachLayer(function(layer) {
+                var geojson = layer.toGeoJSON();
+                var area = 0;
+                if (geojson.geometry.type === 'Polygon') {
+                    area = turf.area(geojson);
+                } else if (geojson.geometry.type === 'LineString') {
+                    var polygon = turf.lineToPolygon(geojson);
+                    area = turf.area(polygon);
+                }
+                totalArea += area;
+            });
+
+            var totalAreaSqFt = totalArea * 10.7639;
+            var costPerSqFt = 1.25;
+            var totalCost = totalAreaSqFt * costPerSqFt;
+
+            document.getElementById('area').innerHTML = 'Total Area: ' + totalAreaSqFt.toFixed(2) + ' sq ft<br>' +
+                                                           'Cost per sq ft: $' + costPerSqFt.toFixed(2) + '<br>' +
+                                                           'Total Cost: $' + totalCost.toFixed(2);
+            // Show the area div after completing a shape
+            document.getElementById('area').style.display = 'block';
+            // Update the hidden input field with the calculated cost
+            document.getElementById('cost').value = totalCost.toFixed(2);
+        }
+
+        function checkAreaSize() {
+            var totalArea = 0;
+            drawnItems.eachLayer(function(layer) {
+                var geojson = layer.toGeoJSON();
+                var area = 0;
+                if (geojson.geometry.type === 'Polygon') {
+                    area = turf.area(geojson);
+                } else if (geojson.geometry.type === 'LineString') {
+                    var polygon = turf.lineToPolygon(geojson);
+                    area = turf.area(polygon);
+                }
+                totalArea += area;
+            });
+
+            var totalAreaSqFt = totalArea * 10.7639;
+            var minimumAreaSqFt = 500;
+            var maximumAreaSqFt = 2000;
+
+            if (totalAreaSqFt < minimumAreaSqFt) {
+                showCustomQuoteNotice('The selected area is too small. Please contact us for a custom quote.');
+            } else if (totalAreaSqFt > maximumAreaSqFt) {
+                showCustomQuoteNotice('The selected area is too large. Please contact us for a custom quote.');
+            } else {
+                hideCustomQuoteNotice();
+            }
+        }
+
+        function showCustomQuoteNotice(message) {
+            var noticeElement = document.createElement('div');
+            noticeElement.className = 'custom-quote-notice';
+            noticeElement.textContent = message;
+            document.body.appendChild(noticeElement);
+        }
+
+        function hideCustomQuoteNotice() {
+            var noticeElement = document.querySelector('.custom-quote-notice');
+            if (noticeElement) {
+                noticeElement.parentNode.removeChild(noticeElement);
+            }
+        }
+
+        // Initialize the map with saved state from query parameters
+        window.onload = function() {
+            var params = new URLSearchParams(window.location.search);
+            var lat = parseFloat(params.get('lat')) || 30.38;
+            var lng = parseFloat(params.get('lng')) || -89.03;
+            var zoom = parseInt(params.get('zoom'), 10) || 10;
+            var bounds = params.get('bounds');
+            var address = params.get('address');
+
+            map.setView([lat, lng], zoom);
+
+            if (bounds) {
+                var decodedBounds = JSON.parse(decodeURIComponent(bounds));
+                L.geoJSON(decodedBounds).addTo(drawnItems);
+            }
+
+            if (address) {
+                document.getElementById('address').value = decodeURIComponent(address);
+            }
+
+            calculateArea();
+            checkAreaSize();
+        };
+
+        // Geocoding control
+        var geocoder = L.Control.geocoder({
+            defaultMarkGeocode: false
+        }).addTo(map);
+
+        geocoder.on('markgeocode', function(e) {
+            var bbox = e.geocode.bbox;
+            var poly = L.polygon([
+                bbox.getSouthEast(),
+                bbox.getNorthEast(),
+                bbox.getNorthWest(),
+                bbox.getSouthWest()
+            ]).addTo(map);
+            map.fitBounds(poly.getBounds());
+        });
+
+        var addressInput = document.getElementById('address');
+        addressInput.addEventListener('change', function(event) {
+            var address = addressInput.value.trim();
+            if (address) {
+                geocoder.geocode(address, function(results) {
+                    if (results.length > 0) {
+                        var result = results[0];
+                        map.setView(result.center, 17); // Zoom to max level
+                        updateQueryString();
+                    } else {
+                        alert('Address not found');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
