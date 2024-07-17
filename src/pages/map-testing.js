@@ -13,7 +13,7 @@ const IndexPage = () => {
       <Seo title="Cuttr Map" />
       <section className="outer section">
         <div className="container" style={{ padding: '0', minHeight: '' }}>
-          <MapTest />
+          {typeof window !== 'undefined' && <MapTest />}
         </div>
       </section>
     </Layout>
