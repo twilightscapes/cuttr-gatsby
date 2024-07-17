@@ -1,6 +1,7 @@
 const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
+
 exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
 
@@ -195,12 +196,23 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 };
 
 
-exports.onCreateWebpackConfig = ({ actions }) => {
+
+
+
+exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
   actions.setWebpackConfig({
     resolve: {
       fallback: {
         "process": require.resolve("process")
       }
-    }
+    },
+    module: {
+      rules: [
+        {
+          test: /react-leaflet|leaflet/,
+          use: loaders.null(),
+        },
+      ],
+    },
   });
 };
