@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Seo from '../components/seo';
 import Layout from '../components/siteLayout';
-import Map from '../components/Map';
+// import Map from '../components/Map';
 import { Helmet } from 'react-helmet';
 import { useLocation } from '@reach/router'; // Import useLocation hook
 // import { MdOutlineIosShare } from "react-icons/md";
-import FrontLoader from '../../static/assets/laser-grid.svg'
+
 // import PWA from '../components/PwaInstaller'
 import { StaticImage } from 'gatsby-plugin-image';
 const IndexPage = () => {
@@ -60,12 +60,7 @@ const IndexPage = () => {
           
         
 
-{/* <StaticImage src="../../static/assets/laser-grid.svg" alt="Default Image" style={{height:'auto', maxHeight:'100vh', position:'absolute', zIndex:'1', top:'0',border:'0px solid !important', objectFit:'contain', margin:'0 auto',
-                    animation:'gridfadeout',
-                    animationDuration:'3s',
-                    animationDelay:'0',
-                    opacity:'0',
-                    animationFillMode:'normal',}} /> */}
+
     
           {/* <Map location={location} onMapUpdate={handleMapUpdate} /> */}
 
