@@ -33,62 +33,65 @@ const MapTest = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const initializeMap = () => {
-      const params = new URLSearchParams(location.search);
-      const latParam = parseFloat(params.get('lat'));
-      const lngParam = parseFloat(params.get('lng'));
-      const zoomParam = parseInt(params.get('zoom'), 10);
+    // Only initialize the map on the client side
+    if (typeof window !== 'undefined') {
+      const initializeMap = () => {
+        const params = new URLSearchParams(location.search);
+        const latParam = parseFloat(params.get('lat'));
+        const lngParam = parseFloat(params.get('lng'));
+        const zoomParam = parseInt(params.get('zoom'), 10);
 
-      const initialZoom = zoomParam || 12;
-      const defaultCenter = [latParam || 30.38, lngParam || -89.03];
+        const initialZoom = zoomParam || 12;
+        const defaultCenter = [latParam || 30.38, lngParam || -89.03];
 
-      const initialMap = L.map(mapRef.current, {
-        center: defaultCenter,
-        zoom: initialZoom,
-        layers: [
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 21,
-          }),
-          L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-            maxZoom: 21,
-            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-          }),
-        ],
-      });
+        const initialMap = L.map(mapRef.current, {
+          center: defaultCenter,
+          zoom: initialZoom,
+          layers: [
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              maxZoom: 21,
+            }),
+            L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+              maxZoom: 21,
+              subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            }),
+          ],
+        });
 
-      initialMap.addLayer(drawnItemsRef.current);
-      initialMap.addLayer(markersRef.current);
+        initialMap.addLayer(drawnItemsRef.current);
+        initialMap.addLayer(markersRef.current);
 
-      const drawControl = new L.Control.Draw({
-        edit: {
-          featureGroup: drawnItemsRef.current,
-        },
-        draw: {
-          polygon: {
-            allowIntersection: false,
-            showArea: false, // Hide area measurement
+        const drawControl = new L.Control.Draw({
+          edit: {
+            featureGroup: drawnItemsRef.current,
           },
-          polyline: false,
-          marker: false,
-          circle: false,
-          circlemarker: false,
-          rectangle: false, // Disable rectangle drawing
-        },
-      });
+          draw: {
+            polygon: {
+              allowIntersection: false,
+              showArea: false, // Hide area measurement
+            },
+            polyline: false,
+            marker: false,
+            circle: false,
+            circlemarker: false,
+            rectangle: false, // Disable rectangle drawing
+          },
+        });
 
-      initialMap.addControl(drawControl);
-      initialMap.zoomControl.remove(); // Remove zoom control
+        initialMap.addControl(drawControl);
+        initialMap.zoomControl.remove(); // Remove zoom control
 
-      setMap(initialMap);
+        setMap(initialMap);
 
-      if (latParam && lngParam) {
-        initialMap.setView([latParam, lngParam], zoomParam || 21);
-        setZoomLevel(zoomParam || 21);
+        if (latParam && lngParam) {
+          initialMap.setView([latParam, lngParam], zoomParam || 21);
+          setZoomLevel(zoomParam || 21);
+        }
+      };
+
+      if (!map) {
+        initializeMap();
       }
-    };
-
-    if (!map) {
-      initializeMap();
     }
   }, [map, location.search]);
 
@@ -236,56 +239,23 @@ const MapTest = () => {
     if (addressParam) {
       document.getElementById('address').value = decodeURIComponent(addressParam);
     }
-    calculateArea();
   };
 
   useEffect(() => {
     if (map) {
       loadFromQueryString();
     }
-  }, [map]);
+  }, [map, location.search]);
 
   return (
     <div>
-      <div style={{ position: 'relative' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            background: '#fff',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            id="address"
-            type="text"
-            placeholder="Enter your address"
-            style={{ width: '380px', marginBottom: '10px', padding: '5px' }}
-          />
-          <button onClick={handleSearch} style={{ marginLeft: '10px', padding: '5px 10px' }}>
-            Search
-          </button>
-        </div>
-        <div
-          id="map"
-          ref={mapRef}
-          style={{ width: '100%', height: '500px', position: 'relative', zIndex: '0' }}
-        ></div>
-        <div
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            zIndex: '1000',
-            background: '#fff',
-            padding: '10px',
-            border: '1px solid #ccc',
-            borderRadius: '5px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-          }}
-          dangerouslySetInnerHTML={{ __html: areaText }}
-        ></div>
-      </div>
+      <form onSubmit={handleSearch}>
+        <label htmlFor="address">Address:</label>
+        <input type="text" id="address" name="address" />
+        <button type="submit">Search</button>
+      </form>
+      <div ref={mapRef} style={{ height: '400px' }}></div>
+      <div dangerouslySetInnerHTML={{ __html: areaText }} />
     </div>
   );
 };
