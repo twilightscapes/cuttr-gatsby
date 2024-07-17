@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import * as turf from '@turf/turf';
@@ -254,8 +254,9 @@ const MapTest = () => {
         <input type="text" id="address" name="address" />
         <button type="submit">Search</button>
       </form>
-      <div ref={mapRef} style={{ height: '400px' }}></div>
-      <div dangerouslySetInnerHTML={{ __html: areaText }} />
+      <div id="map" ref={mapRef} style={{ width: '100%', height: '600px' }}></div>
+      <div id="areaText" dangerouslySetInnerHTML={{ __html: areaText }}></div>
+      <input id="cost" type="hidden" name="cost" value="0.00" />
     </div>
   );
 };
